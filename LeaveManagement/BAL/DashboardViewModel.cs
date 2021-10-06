@@ -526,11 +526,11 @@ namespace LeaveManagement.BAL
                 return null;
             }
         }
-        public List<SingleEmployee> HREmployeesList()
+        public List<HrpositionInfo> HREmployeesList()
         {
             try
             {
-                List<SingleEmployee> empList = _context.Set<SingleEmployee>().FromSql("[dbo].[Emp_GetAllEmployeeProfile]").ToList();
+                List<HrpositionInfo> empList = _context.HrpositionInfo.ToList();
                 return empList;
             }
             catch (Exception ex)

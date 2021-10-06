@@ -90,6 +90,22 @@ namespace LeaveManagement.Models.SpModels
         public string Hr_Status { get; set; }
         public string EmpLeaveStatus { get; set; }
     }
+    public class HrPositionInfo
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public string Skills { get; set; }
+        public string Department { get; set; }
+        public int? NoOfPosition { get; set; }
+        public string Priority { get; set; }
+        public string Budget { get; set; }
+        public DateTime? ExpectedDate { get; set; }
+        public string Experience { get; set; }
+        public string Status { get; set; }
+        public string RequestedBy { get; set; }
+    }
     public class SingleEmployee
     {
         [Key]

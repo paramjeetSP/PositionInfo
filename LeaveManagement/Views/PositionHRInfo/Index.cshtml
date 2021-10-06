@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LeaveManagement.Models.SpModels.SingleEmployee>
+﻿@model IEnumerable<LeaveManagement.Database.HrpositionInfo>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -56,40 +56,40 @@
                                 {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.FullName)
+                                        @Html.DisplayFor(modelItem => item.Title)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.OfficialEmail)
+                                        @Html.DisplayFor(modelItem => item.CreatedOn)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Mobile)
+                                        @Html.DisplayFor(modelItem => item.Skills)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Department)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfPosition)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Priority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Budget)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ExpectedDate)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.Experience)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MarkToBench)
+                                        @Html.DisplayFor(modelItem => item.Status)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PartialAvailable)
+                                        @Html.DisplayFor(modelItem => item.RequestedBy)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Skillset)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CurrentProject)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CurrentProject)
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)">Edit</button>
+                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)">Edit</button>
                                     </td>
                                 </tr>
                                 }

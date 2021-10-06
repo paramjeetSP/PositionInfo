@@ -22,7 +22,7 @@ namespace LeaveManagement.Controllers
         }
         public IActionResult Index()
         {
-            var list = model.EmployeesList();
+            var list = model.HREmployeesList();
             return View(list);
         }
     }
