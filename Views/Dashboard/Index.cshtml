@@ -1,0 +1,379 @@
+﻿@model LeaveManagement.Models.SpModels.PendingLeaves
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    @@import 'https://code.highcharts.com/css/highcharts.css';
+
+    #container {
+        height: 400px;
+        max-width: 800px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+
+    .highcharts-pie-series .highcharts-point {
+        stroke: #EDE;
+        stroke-width: 2px;
+    }
+
+    .highcharts-pie-series .highcharts-data-label-connector {
+        stroke: silver;
+        stroke-dasharray: 2, 2;
+        stroke-width: 2px;
+    }
+
+    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .d--box h2 {
+        font-size: 18px;
+    }
+</style>
+
+<main id="leave-status" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                    <div class="col-sm-3 ">
+                        <div class="d--box">
+                            <h2>Total Leaves Left</h2>
+
+                            <div class="leave-icon"> <img src="~/images/layers.png" /></div>
+                            <h3>@Model.TotalLeavesLeft</h3>
+                        </div>
+                    </div>
+                        <div class="col-sm-3 ">
+                            <div class="d--box">
+                                <h2>Sick Leaves Left</h2>
+                                <div class="leave-icon">
+                                    <img src="~/images/pills.png" />
+                                </div>
+                                <h3>@Model.SickLeavesLeft</h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <div class="d--box">
+                                <h2>Casual Leaves Left</h2>
+                                <div class="leave-icon">
+                                    <img src="~/images/leaf.png" />
+                                </div>
+                                <h3>@Model.CasualLeavesLeft</h3>
+                            </div>
+                        </div>
+                    <div class="col-sm-3 ">
+                        <div class="d--box">
+                            <h2>Earned Leaves Left</h2>
+                            <div class="leave-icon">
+                                <img src="~/images/Untitled-1.png" />
+                            </div>
+                            <h3>@Model.PaidLeavesLeft</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="d--box">
+                            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#Leave_Status').addClass('active');
+        PieChart();
+        // ColumnChart3D1();
+        // ColumnChart3D2();
+    });
+    function PieChart() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Dashboard/PieChart',
+                success:
+                    function (response) {
+                        console.log(response);
+
+                        Highcharts.chart('container', {
+
+                            chart: {
+                                styledMode: true
+                            },
+
+                            title: {
+                                text: 'Leave Summary'
+                            },
+
+                            xAxis: {
+                                categories: response.name
+                            },
+
+                            series: [{
+                                name: 'Leaves',
+                                type: 'pie',
+                                allowPointSelect: true,
+                                keys: ['name', 'y', 'selected', 'sliced'],
+                                data: response,
+                                showInLegend: true
+                            }]
+                        });
+
+                    }
+            });
+    }
+    function ColumnChart3D() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Dashboard/PieChart',
+                success:
+                    function (response) {
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp.push(item.name);
+                        }
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+                        Highcharts.chart('ColumnChart3Dcontainer', {
+                            chart: {
+                                type: 'column',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 10,
+                                    beta: 25,
+                                    depth: 70
+                                }
+                            },
+                            title: {
+                                text: 'Top 5 employees with Leaves'
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            plotOptions: {
+                                column: {
+                                    depth: 25
+                                }
+                            },
+                            xAxis: {
+                                categories: emp,
+                                labels: {
+                                    skew3d: true,
+                                    style: {
+                                        fontSize: '16px'
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: null
+                                }
+                            },
+                            series: [{
+                                name: 'Leaves',
+                                data: emp1
+                            }]
+                        });
+
+                    }
+            });
+
+    }
+    function ColumnChart3D1() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Dashboard/PieChart',
+                success:
+                    function (response) {
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            var data1 = {
+                                "name": item.name,
+                                "y": item.y,
+                                "drilldown": item.name
+                            }
+                            //emp.push("name"= item.name, "y"= item.y, "drilldown"= item.name);
+                            emp.push(data1);
+                        }
+                        console.log('emp ', emp);
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+
+                        // Create the chart
+
+                        // Create the chart
+                        Highcharts.chart('container1', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Browser market shares. January, 2018'
+                            },
+                            subtitle: {
+                                text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+                            },
+                            xAxis: {
+                                type: 'category'
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Total percent market share'
+                                }
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y:.1f}%'
+                                    }
+                                }
+                            },
+
+                            tooltip: {
+                                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                            },
+
+                            "series": [
+                                {
+                                    "name": "Browsers",
+                                    "colorByPoint": true,
+                                    "data": [
+                                        {
+                                            "name": "Chrome",
+                                            "y": 62.74,
+                                            "drilldown": "Chrome"
+                                        },
+                                        {
+                                            "name": "Firefox",
+                                            "y": 10.57,
+                                            "drilldown": "Firefox"
+                                        },
+                                        {
+                                            "name": "Internet Explorer",
+                                            "y": 7.23,
+                                            "drilldown": "Internet Explorer"
+                                        },
+                                        {
+                                            "name": "Safari",
+                                            "y": 5.58,
+                                            "drilldown": "Safari"
+                                        },
+                                        {
+                                            "name": "Edge",
+                                            "y": 4.02,
+                                            "drilldown": "Edge"
+                                        },
+                                        {
+                                            "name": "Opera",
+                                            "y": 1.92,
+                                            "drilldown": "Opera"
+                                        },
+                                        {
+                                            "name": "Other",
+                                            "y": 7.62,
+                                            "drilldown": null
+                                        }
+                                    ]
+                                }
+
+                            ]
+
+                        });
+
+                    }
+            });
+
+    }
+    function ColumnChart3D2() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Dashboard/PieChart',
+                success:
+                    function (response) {
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp.push(item.name);
+                        }
+                        console.log('emp ', emp);
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+
+
+                        var chart = Highcharts.chart('container', {
+
+                            title: {
+                                text: 'Leave Balance'
+                            },
+
+                            subtitle: {
+                                text: 'Plain'
+                            },
+
+                            xAxis: {
+                                categories: emp
+                            },
+
+                            series: [{
+                                type: 'column',
+                                colorByPoint: true,
+                                data: emp1,
+                                showInLegend: false
+                            }]
+
+                        });
+
+
+
+
+
+                    }
+            });
+
+    }
+</script>
