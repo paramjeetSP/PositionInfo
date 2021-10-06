@@ -1,0 +1,139 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.SingleEmployee>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main id="EmployeeList" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                    <div class="col-sm-12">
+                        <button>Add</button>
+                        <table class="table" id="emp-list">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Title
+                                    </th>
+                                    <th>
+                                        Created On
+                                    </th>
+                                    <th>
+                                        Skills
+                                    </th>
+                                    <th>
+                                        Department
+                                    </th>
+                                    <th>
+                                        No. Of Positions
+                                    </th>
+                                    <th>
+                                        Priority
+                                    </th>
+                                    <th>
+                                        Budget
+                                    </th>
+                                    <th>
+                                        Expected Date
+                                    </th>
+                                    <th>
+                                        Experience
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Requested By
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OfficialEmail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mobile)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Department)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Experience)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MarkToBench)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PartialAvailable)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Skillset)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrentProject)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrentProject)
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)">Edit</button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BalanceLeaveModal" role="dialog">
+    </div>
+</main>
+
+<script>
+    function initateEdit(LeaveRowID) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditEmpResourse", "PositionInfo")',
+            data: { ID: LeaveRowID },
+          //  contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                debugger
+                $('#BalanceLeaveModal').html(response);
+                $('#BalanceLeaveModal').modal('show');
+            },
+            error: function (response) {
+                //alert('some error has occured !!');
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#PositionHR_form').addClass('active');
+        $('#emp-list').DataTable({
+            "ordering": false,
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        });
+        //$('#emp-list').DataTable();
+    });
+</script>

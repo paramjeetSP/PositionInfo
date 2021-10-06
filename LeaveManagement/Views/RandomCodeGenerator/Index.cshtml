@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .send-random-code {
+        background: #28bdf0;
+        color: #fff;
+        padding: 10px 12px;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        color: white !important;
+        cursor: pointer;
+    }
+</style>
+<main id="EmployeeList" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                  
+                    <div class="col-sm-12" id="employee-random-code-grid">
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="hidden">
+    <a class="url-RandomCodeGenerator-GetAuthCodeGrid" asp-controller="RandomCodeGenerator" asp-action="GetAuthCodeGrid"></a>
+</div>
+<script>
+    var inintialLode = 0;
+    $(document).ready(function () {
+        $('#EmployeRandomCode_List').addClass('active');
+       
+        LoadAuthCodeGrid();
+        //initialLoadAuthCodeGrid();
+
+        //$('#emp-list').DataTable();
+    });
+
+    function LoadAuthCodeGrid() {
+        inintialLode = inintialLode + 1;
+        let url = $('.url-RandomCodeGenerator-GetAuthCodeGrid').attr('href');
+        $.ajax({
+            url: url,
+            success: (res) => {
+                $('#employee-random-code-grid').html(res);
+                $('#EmployeeCodeList').DataTable({
+                    "ordering": false,
+                    stateSave: true,
+                    columnDefs: [
+                        {
+                            targets: [0, 1, 2],
+                            className: 'mdl-data-table__cell--non-numeric'
+                        }
+                    ]
+                });
+                if (inintialLode == 1) {
+                    initialLoadAuthCodeGrid();
+                }
+            }
+        });
+    }
+
+    function initialLoadAuthCodeGrid() {
+        var table = $('#EmployeeCodeList').DataTable();
+        table.state.clear();
+        table.destroy();
+        table = $("#EmployeeCodeList").DataTable({
+            "ordering": false,
+            stateSave: true,
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        });
+    }
+
+</script>

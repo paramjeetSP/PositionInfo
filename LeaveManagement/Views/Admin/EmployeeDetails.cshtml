@@ -1,0 +1,1042 @@
+﻿@model LeaveManagement.Models.SpModels.SingleEmployee
+@{
+    var is_Prohbition = ViewData["IsProhbitionPeriod"].ToString();
+    var leaveHistoryDataProhbition = new LeaveManagement.Models.SpModels.ProhbitionEmployeeList();
+    var leaveHistoryData = new LeaveManagement.Models.SpModels.ClsEmp_GetEmployeePendingLeaves();
+
+    if (is_Prohbition == "True")
+    {
+        leaveHistoryDataProhbition = ViewData["leaveHistory"] as LeaveManagement.Models.SpModels.ProhbitionEmployeeList;
+    }
+    else
+    {
+        leaveHistoryData = ViewData["leaveHistory"] as LeaveManagement.Models.SpModels.ClsEmp_GetEmployeePendingLeaves;
+    }
+
+}
+@{
+    ViewData["Title"] = "EmployeeDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    @@import 'https://code.highcharts.com/css/highcharts.css';
+
+    #container {
+        height: 400px;
+        max-width: 800px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+
+    .highcharts-pie-series .highcharts-point {
+        stroke: #EDE;
+        stroke-width: 2px;
+    }
+
+    .highcharts-pie-series .highcharts-data-label-connector {
+        stroke: silver;
+        stroke-dasharray: 2, 2;
+        stroke-width: 2px;
+    }
+
+    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .d--box h2 {
+        font-size: 18px;
+    }
+
+
+    /*tabbing design start here on 1-feb-2017*/
+    .clearfix:before,
+    .clearfix:after {
+        content: " ";
+        display: table;
+    }
+
+    .leave-status-tabular h1 {
+        color: #ccc;
+        text-align: center;
+    }
+
+    .leave-status-tabular a {
+        color: #ccc;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .tab_container {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 0px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .leave-status-tabular input, .leave-status-tabular section {
+        clear: both;
+        padding-top: 10px;
+        display: none;
+    }
+
+    .leave-status-tabular label {
+        font-weight: 700;
+        font-size: 18px;
+        display: block;
+        float: left;
+        width: 16.4%;
+        padding: 5px;
+        color: #757575;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        background: #f0f0f0;
+        height: 72px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #tab1:checked ~ #content1,
+    #tab2:checked ~ #content2,
+    #tab3:checked ~ #content3,
+    #tab4:checked ~ #content4,
+    #tab5:checked ~ #content5,
+    #tab6:checked ~ #content6 {
+        display: block;
+        padding: 20px;
+        background: #fff;
+       /* color: #999;*/
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tab_container .tab-content p,
+    .tab_container .tab-content h3 {
+        -webkit-animation: fadeInScale 0.7s ease-in-out;
+        -moz-animation: fadeInScale 0.7s ease-in-out;
+        animation: fadeInScale 0.7s ease-in-out;
+    }
+
+    .tab_container .tab-content h3 {
+        text-align: center;
+    }
+
+    .tab_container [id^="tab"]:checked + label {
+        background: #fff;
+        box-shadow: inset 0 3px #0CE;
+    }
+
+        .tab_container [id^="tab"]:checked + label .fa {
+            color: #0CE;
+        }
+
+    label .fa {
+        font-size: 1.3em;
+        margin: 0 0.4em 0 0;
+    }
+
+
+
+    .leaveTaken {
+        font-weight: 700;
+        font-size: 21px;
+        display: block;
+        float: left;
+        width: 100%;
+        padding: 5px;
+        color: #222222;
+    }
+
+    /*Media query*/
+    @@media only screen and (max-width: 930px) {
+        label span {
+            font-size: 14px;
+        }
+
+        label .fa {
+            font-size: 14px;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+
+        label .fa {
+            font-size: 16px;
+        }
+
+        .tab_container {
+            width: 98%;
+        }
+
+        .leave-status-tabular label {
+            width: 100%;
+        }
+
+        .leaveTaken {
+            font-size: 20px;
+        }
+    }
+    /*Content Animation*/
+    @@keyframes fadeInScale {
+        0% {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    /*tabbing design ends*/
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        padding: 6px 12px !important;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin:0px !important;
+        border-radius:5px !important;
+    }
+</style>
+
+<main id="employeedetails" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center leave-data">
+                    <div class="back-list">
+                        <a asp-controller="Admin" asp-action="EmployeeList">Back to List</a>
+                    </div>
+                    <div class="leave-count-wrapper">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-20">
+                                @if (is_Prohbition == "True")
+                                {
+                                    <div class="countHeading">Total Leave Allocated @leaveHistoryDataProhbition.AllowedTotalLeaves</div>
+                                }
+                                else
+                                {
+                                    <div id="allocateCount" class="countHeading"></div>
+                                }
+
+                            </div>
+                            @*<div class="col-sm-4">
+                                    <div id="totalLeaveLeft"></div>
+                                </div>*@
+                        </div>
+                    </div>
+
+
+                    @*<div id="container" style="min-width: 100%; max-width: 100%; height: 400px; margin: 0 auto"></div>*@
+                    <div id="leaveTable">
+                        @if (is_Prohbition == "True")
+                        {
+                            <table class="table table-bordered" style="width: 1045px;">
+                                <thead>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>Leave Taken</th>
+                                        <th>Leave Left</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Casual Leave</td>
+                                        <td>@leaveHistoryDataProhbition.TotalLeaveTaken</td>
+                                        <td>@leaveHistoryDataProhbition.CasualLeavesLeft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leave Without Pay</td>
+                                        <td>@leaveHistoryDataProhbition.LWP</td>
+                                        <td>N/A</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <table class="table table-bordered" style="width: 1045px;">
+                                <thead>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>Leave Taken</th>
+                                        <th>Leave Left</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sick Leave</td>
+                                        <td>@leaveHistoryData.SickLeaveTaken</td>
+                                        <td>@leaveHistoryData.SickLeavesLeft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Casual Leave</td>
+                                        <td>@leaveHistoryData.CasualLeaveTaken</td>
+                                        <td>@leaveHistoryData.CasualLeavesLeft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Earned Leave</td>
+                                        <td>@leaveHistoryData.PaidLeaveTaken</td>
+                                        <td>@leaveHistoryData.PaidLeavesLeft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leave Without Pay</td>
+                                        @*<td id="TdLWPLCount"></td>*@
+                                        <td>@leaveHistoryData.LWP</td>
+                                        <td>N/A</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+
+                    <div class="leave-status-tabular">
+                        <div class="container">
+                            <div class="tab_container">
+                                <input id="tab1" type="radio" name="tabs" checked>
+                                <label for="tab1"><span>Employee Details</span></label>
+
+                                @if (is_Prohbition != "True")
+                                {
+                                    <input id="tab2" type="radio" name="tabs">
+                                    @*<label for="tab2"><span>Sick Leaves</span> (<span id="SLCount"></span>)</label>*@
+                                    <label for="tab2"><span>Sick Leaves</span></label>
+                                }
+
+                                <input id="tab3" type="radio" name="tabs">
+                                @*<label for="tab3"><span>Casual Leaves</span> (<span id="CLCount"></span>)</label>*@
+                                <label for="tab3"><span>Casual Leaves</span></label>
+
+                                @if (is_Prohbition != "True")
+                                {
+                                    <input id="tab4" type="radio" name="tabs">
+                                    @*<label for="tab4"><span>Paid Leaves</span> (<span id="PLCount"></span>)</label>*@
+                                    <label for="tab4"><span>Earned Leaves</span></label>
+                                }
+
+                                <input id="tab5" type="radio" name="tabs">
+                                @*<label for="tab5"><span>Leave Without Pay</span> (<span id="LWPLCount"></span>)</label>*@
+                                <label for="tab5"><span>Leave Without Pay</span></label>
+
+                                @if (is_Prohbition != "True")
+                                {
+                                    <input id="tab6" type="radio" name="tabs">
+                                    <label for="tab6"><span>Leave History</span></label>
+                                }
+
+                                <section id="content1" class="tab-content">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="hidden" asp-for="ID" id="emp-id" />
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    Emp ID
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.Emp_Id)
+                                                </dd>
+                                                <dt>
+                                                    Emp Code
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.Emp_Code)
+                                                </dd>
+                                                <dt>
+                                                    First Name
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.FName)
+                                                </dd>
+                                                <dt>
+                                                    Full Name
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.FullName)
+                                                </dd>
+                                                <dt>
+                                                    Email ID
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.OfficialEmail)
+                                                </dd>
+                                                <dt>
+                                                    Contact No.
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.Mobile)
+                                                </dd>
+                                                <dt>
+                                                    Confirmation Status
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.ConfirmationStatus)
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    D.O.B
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.DOB)
+                                                </dd>
+                                                <dt>
+                                                    @Html.DisplayNameFor(model => model.Department)
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.Department)
+                                                </dd>
+                                                <dt>
+                                                    Permanent Address
+                                                </dt>
+                                                <dd>
+                                                    @if (string.IsNullOrEmpty(Model.PermanentAddress))
+                                                    {
+                                                        <span>-NIL-</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(model => model.PermanentAddress)
+                                                    }
+                                                </dd>
+                                                <dt>
+                                                    @Html.DisplayNameFor(model => model.Designation)
+                                                </dt>
+                                                <dd>
+                                                    @if (string.IsNullOrEmpty(Model.Designation))
+                                                    {
+                                                        <span>-NIL-</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(model => model.Designation)
+                                                    }
+                                                </dd>
+                                                <dt>
+                                                    @Html.DisplayNameFor(model => model.BloodGroup)
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.BloodGroup)
+                                                </dd>
+                                                <dt>
+                                                    @Html.DisplayNameFor(model => model.Grade)
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(model => model.Grade)
+                                                </dd>
+
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                @if (is_Prohbition != "True")
+                                {
+
+                                    <section id="content2" class="tab-content">
+                                        @*<h3>Headline 2</h3>
+                                            <p>Tab 2 content.</p>*@
+                                        <div class="sickLeaveArea  emp-leave-type">
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-6">
+                                                    @if (is_Prohbition == "True")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="leaveTaken">Sick Leave Take  @leaveHistoryData.SickLeaveTaken</div>
+
+                                                    }
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    @if (is_Prohbition == "True")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="leaveLeft">Sick Leave Left  @leaveHistoryData.SickLeavesLeft</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="OpenModalAddLeave(@leaveHistoryData.EmpID,3)">Save</button>*@
+                                    </section>
+                                }
+
+
+                                <section id="content3" class="tab-content">
+                                    @*<h3>Headline 3</h3>
+                                        <p>Tab 3 content</p>*@
+                                    <div class="casualLeaveArea  emp-leave-type">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @if (is_Prohbition == "True")
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="leaveTaken">Casual Leave Taken  @leaveHistoryData.CasualLeaveTaken</div>
+                                                }
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                @if (is_Prohbition == "True")
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="leaveLeft">Casual Leave Left  @leaveHistoryData.CasualLeavesLeft</div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        @*<button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="OpenModalAddLeave(@leaveHistoryData.EmpID,1)">Save</button>*@
+                                    </div>
+                                </section>
+
+                                @if (is_Prohbition != "True")
+                                {
+
+                                    <section id="content4" class="tab-content">
+                                        @*<h3>Headline 4</h3>
+                                            <p>tab 4 Content</p>*@
+                                        <div class="paidLeaveArea emp-leave-type">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    @if (is_Prohbition == "True")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="leaveTaken">Earned Leave Taken  @leaveHistoryData.PaidLeaveTaken</div>
+                                                    }
+
+                                                </div>
+                                                <div class="col-sm-6">
+
+                                                    @if (is_Prohbition == "True")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="leaveLeft">Earned Leave Left  @leaveHistoryData.PaidLeavesLeft</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="OpenModalAddLeave(@leaveHistoryData.EmpID,5)">Save</button>*@
+                                    </section>
+
+                                }
+                                <section id="content5" class="tab-content">
+                                    <div class="paidLeaveArea emp-leave-type">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @if (is_Prohbition == "True")
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="leaveTaken" id="TdLWPLCountL"></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                @if (is_Prohbition != "True")
+                                {
+
+                                    <section id="content6" class="tab-content">
+                                        <div class="paidLeaveArea emp-leave-type">
+                                            <div class="row">
+                                                @*<div class="col-sm-6">
+                                                        @if (is_Prohbition == "True")
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="leaveTaken">Earned Leave Taken  @leaveHistoryData.PaidLeaveTaken</div>
+                                                        }
+
+                                                    </div>
+                                                    <div class="col-sm-6">
+
+                                                        @if (is_Prohbition == "True")
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="leaveLeft">Earned Leave Left  @leaveHistoryData.PaidLeavesLeft</div>
+                                                        }
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                        @*<button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="OpenModalAddLeave(@leaveHistoryData.EmpID,5)">Save</button>*@
+                                    </section>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- edit leave Modal -->
+    <div class="modal fade" id="editLeaveModal" role="dialog">
+    </div>
+
+    <div class="modal fade" id="SaveLeaveModal" role="dialog">
+
+    </div>
+    <div class="modal fade" id="BalanceLeaveModal" role="dialog">
+    </div>
+</main>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+
+@*<div class="row">
+        <div class="col-md-6">
+            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="ColumnChart3Dcontainer" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        </div>
+
+    </div>*@
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var id = $('#emp-id').val();
+        $('#Employee_List').addClass('active');
+        //$.ajax(
+        //    {
+        //        type: 'GET',
+        //        //dataType: 'JSON',
+        //        url: '/Admin/EmpLeaves/' + id,
+        //        success: function (response) {
+        //            console.log(response);
+        //            $('.leave-data').append(response);
+        //            //$('.leave-Deatils').append(response);
+        //            PieChart(id);
+        //            PaidLeaveSection(id, 5, 0);
+        //            SickLeaveSection(id, 3, 0);
+        //            CasualLeaveSection(id, 1, 0);
+        //        }
+        //    });
+        PaidLeaveSection(id, 5, 0);
+        //SickLeaveSection(id,3, 0);
+        //CasualLeaveSection(id,1, 0);
+        // ColumnChart3D(id);
+    });
+
+    function PieChart(id) {
+        var url = '/Admin/EmpPieChart' + '?userID=' + id;
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: url,
+                success:
+                    function (response) {
+                        console.log(response);
+                        if (response[0].y == 0 && response[1].y == 0 && response[2].y == 0 && response[3].y == 0) {
+                            $('#container').empty();
+                            $('#container').append('<h6>No Record found</h6>');
+                            return;
+                        }
+
+                        //Highcharts.chart('container', {
+
+                        //    chart: {
+                        //        styledMode: true
+                        //    },
+
+                        //    title: {
+                        //        text: 'Pie point CSS'
+                        //    },
+
+                        //    xAxis: {
+                        //        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                        //    },
+
+                        //    series: [{
+                        //        type: 'pie',
+                        //        allowPointSelect: true,
+                        //        keys: ['name', 'y', 'selected', 'sliced'],
+                        //        data: [
+                        //            ['Apples', 29.9, false],
+                        //            ['Pears', 71.5, false],
+                        //            ['Oranges', 106.4, false],
+                        //            ['Plums', 129.2, false],
+                        //            ['Bananas', 144.0, false],
+                        //            ['Peaches', 176.0, false],
+                        //            ['Prunes', 135.6, true, true],
+                        //            ['Avocados', 148.5, false]
+                        //        ],
+                        //        showInLegend: true
+                        //    }]
+                        //});
+                        Highcharts.chart('container', {
+                            chart: {
+                                type: 'pie',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 45,
+                                    beta: 0
+                                }
+                            },
+                            title: {
+                                text: 'Employee Leave Details'
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.y:.1f}%</b>'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    depth: 35,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.name}'
+                                    }
+                                }
+                            },
+                            series: [{
+                                type: 'pie',
+                                name: 'Leaves',
+                                data: response
+                            }]
+                        });
+
+                    }
+            });
+    }
+    function ColumnChart3D() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Dashboard/PieChart',
+                success:
+                    function (response) {
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp.push(item.name);
+                        }
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+                        Highcharts.chart('ColumnChart3Dcontainer', {
+                            chart: {
+                                type: 'column',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 10,
+                                    beta: 25,
+                                    depth: 70
+                                }
+                            },
+                            title: {
+                                text: 'Top 5 employees with Leaves'
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            plotOptions: {
+                                column: {
+                                    depth: 25
+                                }
+                            },
+                            xAxis: {
+                                categories: emp,
+                                labels: {
+                                    skew3d: true,
+                                    style: {
+                                        fontSize: '16px'
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: null
+                                }
+                            },
+                            series: [{
+                                name: 'Leaves',
+                                data: emp1
+                            }]
+                        });
+
+                    }
+            });
+
+    }
+    function BalanceLeaveSection(userId) {
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Admin/EmployeeBalanceLeavesDetails/?id=' + userId,
+                success: function (response) {
+                    console.log(response);
+                    $('#content6').append(response);
+                    ProgressBar(userId);
+                    $('#balanceleave').DataTable({
+                        "ordering": false,
+                        "searching": false,
+                        "bPaginate": false,
+                        "bInfo": false,
+                        columnDefs: [
+                            {
+                                targets: [0, 1, 2],
+                                className: 'mdl-data-table__cell--non-numeric'
+                            }
+                        ]
+                    });
+                }
+            });
+
+    }
+    function SickLeaveSection(userId, LeaveType, lwp) {
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Admin/EmployeeLeavesDetails/?id=' + userId + '&LeaveType=' + LeaveType + '&lwp=' + lwp,
+                success: function (response) {
+                    console.log(response);
+                    //LeaveTable
+                    $('#content2').append(response);
+                    CasualLeaveSection(userId, 1, 0);
+                }
+            });
+
+    }
+    function PaidLeaveSection(userId, LeaveType, lwp) {
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Admin/EmployeeLeavesDetails/?id=' + userId + '&LeaveType=' + LeaveType + '&lwp=' + lwp,
+                success: function (response) {
+                    console.log(response);
+                    $('#content4').append(response);
+                    SickLeaveSection(userId, 3, 0);
+                }
+            });
+
+    }
+    function CasualLeaveSection(userId, LeaveType, lwp) {
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Admin/EmployeeLeavesDetails/?id=' + userId + '&LeaveType=' + LeaveType + '&lwp=' + lwp,
+                success: function (response) {
+                    console.log(response);
+                    $('#content3').append(response);
+                    //LeaveTable
+                    //ProgressBar(userId);
+                    LWPLeaveSection(userId, 1);
+                    $('.LeaveTable').DataTable({
+                        "ordering": false,
+                        "searching": false,
+                        "bPaginate": false,
+                        "bInfo": false,
+                        columnDefs: [
+                            {
+                                targets: [0, 1, 2],
+                                className: 'mdl-data-table__cell--non-numeric'
+                            }
+                        ]
+                    });
+                }
+            });
+
+    }
+    function LWPLeaveSection(userId, lwp) {
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Admin/EmployeeLeavesLWPDetails/?id=' + userId + '&lwp=' + lwp,
+                success: function (response) {
+                    console.log(response);
+                    $('#content5').append(response);
+                    //LeaveTable
+                    BalanceLeaveSection(userId)
+                   // ProgressBar(userId);
+                    $('#lwpList').DataTable({
+                        "ordering": false,
+                        "searching": false,
+                        "bPaginate": false,
+                        "bInfo": false,
+                        columnDefs: [
+                            {
+                                targets: [0, 1, 2],
+                                className: 'mdl-data-table__cell--non-numeric'
+                            }
+                        ]
+                    });
+                }
+            });
+
+    }
+
+
+
+    function ProgressBar(userID) {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Admin/LeaveCountsByID?userID=' + userID,
+                success:
+                    function (response) {
+                        $('#SLCount').append(response.sickLeavesTakenCount);
+                        $('#PLCount').append(response.paiedLeavesTakenCount);
+                        $('#CLCount').append(response.casualLeavesTakenCount);
+                        $('#LWPLCount').append(response.lwpLeavesTakenCount);
+                        $('#TdLWPLCount').append(response.lwpLeavesTakenCount);
+
+                        $('#TdLWPLCountL').append("Leave without Pay Taken " + response.lwpLeavesTakenCount);
+
+                        var leftCount = [];
+                        var takenCount = [];
+                        var TotalSum = 0.0;
+                        var totaAllocatedLeaves = response.allocatedCount;
+                        $('#allocateCount').append('Total Leave Allocated ' + totaAllocatedLeaves + '(Casual Leaves ' + response.allocatedCasualLeaves + ', Sick Leaves ' + response.allocatedSickLeaves + ', Earned Leaves ' + response.allocatedPaidLeaves + ')');
+
+                        // total leave left section added on 8-feb-2018
+                        $('#totalLeaveLeft').append('Total Leave Left ' + response.totalLeaveLeft);
+
+                        var counter = 1;
+                        var TakenLeaveCount = 4;
+                        for (var prop in response.leaves[0].leaveLeftBar) {
+                            var item = response.leaves[0].leaveLeftBar[prop];
+
+                            leftCount.push(item.leaveLeftCount);
+                        }
+                        for (var prop in response.leaves[0].leaveTakenBar) {
+                            var item = response.leaves[0].leaveTakenBar[prop];
+                            counter = counter + 1;
+                            if (counter <= TakenLeaveCount) {
+                                TotalSum = TotalSum + item.leaveTakenCount;
+                                console.log(TotalSum);
+
+                            }
+                            takenCount.push(item.leaveTakenCount);
+                        }
+
+
+                        Highcharts.chart('container', {
+                            chart: {
+                                type: 'bar'
+                            },
+                            title: {
+                                text: 'Total Leave Taken:' + TotalSum
+                            },
+                            xAxis: {
+                                categories: ['Casual Leaves', 'Sick Leaves', 'Earned Leaves', 'Leave Without Pay']
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Leaves Status'
+                                }
+                            },
+                            legend: {
+                                reversed: true
+                            },
+                            plotOptions: {
+                                series: {
+                                    stacking: 'normal',
+                                    dataLabels: {
+                                        enabled: true,
+                                        align: 'right',
+                                        color: '#FFFFFF',
+                                        x: -10
+                                    },
+                                }
+                            },
+                            series: [{
+                                name: 'Leave Taken',
+                                data: takenCount,
+                            }, {
+                                name: 'Leave Left',
+                                data: leftCount,
+                            }]
+                        });
+                    }
+            });
+
+    }
+
+
+    function OpenModalAddLeave(Emp_Id, fkLeaveType) {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetEmpLeave", "Admin")',
+            data: { EmpId: Emp_Id, fkLeaveType: fkLeaveType },
+          //  contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+                $('#SaveLeaveModal').html(response);
+                $('#SaveLeaveModal').modal('show');
+            },
+            error: function (response) {
+                //alert('some error has occured !!');
+            }
+        });
+    }
+</script>
+
+
+

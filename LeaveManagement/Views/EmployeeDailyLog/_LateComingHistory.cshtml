@@ -1,0 +1,118 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.LateComing_Details>
+<div class="table-responsive">
+
+    <table class="table" id="Log-List">
+        <thead>
+            <tr>
+                <th>
+                    Emp Name
+                </th>
+                <th>
+                    Emp Code
+                </th>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    D.O.J.
+                </th>
+                <th>
+                    Dept Name
+                </th>
+                <th> Action </th>
+            </tr>
+        </thead>
+
+        <tbody id="tableContent">
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emp_Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOJ)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeptName)
+                        </td>
+                        <td>
+                            <a onclick="LateComingDetailsHistory(@item.ID);" href="#">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
+<script>
+
+    $('#Log-List').DataTable({
+        "ordering": false,
+        "searching": true,
+        "bPaginate": true,
+        columnDefs: [
+            {
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ]
+    });
+    function LateComingDetailsHistory(Id) {
+        var Emp_Id = Id;
+        var First = 1;
+        var StartDate = $('#start').val();
+        var EndDate = $('#end').val();
+        if ((StartDate == undefined && EndDate == undefined) || (StartDate == "" && EndDate == "")) {
+            First = 2;
+        }
+        if (First == 1) {
+            $('.lds-wrapper').show();
+            if (StartDate == undefined || EndDate == undefined || StartDate == "" || EndDate == "") {
+                $('.lds-wrapper').hide();
+                alert("Please select Start Date and End Date!");
+                return;
+            }
+        }
+
+        if (StartDate == undefined) {
+            StartDate = null;
+        }
+        if (EndDate == undefined) {
+            EndDate = null;
+        }
+        $.ajax(
+            {
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: "application/json; charset=utf-8",
+                url: '/EmployeeDailyLog/LateComing_Details_History?StartDate=' + StartDate + '&EndDate=' + EndDate + '&UserID=' + Emp_Id,
+                success: function (response) {
+                    if (response.status = "true") {
+                        window.location.href = response.newurl;
+                    }
+                    else {
+                        window.alert(response.message);
+
+                    }
+
+                }
+            });
+    }
+
+</script>

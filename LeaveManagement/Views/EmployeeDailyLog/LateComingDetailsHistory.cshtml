@@ -1,0 +1,133 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.LateComing_Details_History>
+@{ 
+    var ActualWorkingHours = "";
+    var TotalWorkingHours = "";
+    if (ViewData["ActualWorkingHours"] != null)
+    {
+        ActualWorkingHours =Convert.ToString(ViewData["ActualWorkingHours"]);
+    }
+    if(ViewData["TotalWorkingHours"]!=null)
+    {
+        TotalWorkingHours= Convert.ToString(ViewData["TotalWorkingHours"]);
+    }
+
+}
+<main id="LeaveSummary" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                    <label class="countHeading" style="font-weight: bold;font-size: 16px;" for="ActualWorkingHours">Working Hour's Detail</label>
+                    <div class="back-list">
+                        <a asp-controller="EmployeeDailyLog" asp-action="Index">Back to List</a>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                                <label class="countHeading" style="font-weight: bold;font-size: 16px;" for="ActualWorkingHours">Actual Working Hours : @ActualWorkingHours </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="countHeading" style="font-weight: bold;font-size: 16px;" for="totalWorkingHours">Total Working Hours : @TotalWorkingHours</label>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="Emp-Hist">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Emp_Id)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Login)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Logout)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.PunchIn)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.PunchOut)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.WorkingHours)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ProductiveHours)
+                                        </th>
+                                        <th>
+            @Html.DisplayName("Early Check Out Reason")
+        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Emp_Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Login)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Logout)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PunchIn)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PunchOut)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.WorkingHours)
+
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductiveHours)
+                                        </td>
+                                        <td>
+
+            @if (item.Earlycheckoutreson != "")
+            {
+                @Html.DisplayFor(modelItem => item.Earlycheckoutreson)
+            }
+            else
+            {
+                <label for="na">N/A</label>
+            }
+
+        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#EmployeLateComing_List').addClass('active');
+        $('#Emp-Hist').DataTable({
+            "ordering": false,
+            "searching": true,
+            "bPaginate": true,
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        });
+        //$('#emp-list').DataTable();
+    });
+</script>

@@ -1,0 +1,563 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.EmployeesLeaveDetails>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    #container {
+        height: 400px;
+        max-width: 800px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+    /*tabbing design start here on 1-feb-2017*/
+    .clearfix:before,
+    .clearfix:after {
+        content: " ";
+        display: table;
+    }
+
+    .leave-status-tabular h1 {
+        color: #ccc;
+        text-align: center;
+    }
+
+    .leave-status-tabular a {
+        color: #ccc;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .tab_container {
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 0px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .leave-status-tabular input, .leave-status-tabular section {
+        clear: both;
+        padding-top: 10px;
+        display: none;
+    }
+
+    .leave-status-tabular label {
+        font-weight: 700;
+        font-size: 18px;
+        display: block;
+        float: left;
+        width: 20%;
+        padding: 5px;
+        color: #757575;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        background: #f0f0f0;
+        height: 72px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #tab1:checked ~ #content1,
+    #tab2:checked ~ #content2,
+    #tab3:checked ~ #content3,
+    #tab4:checked ~ #content4,
+    #tab5:checked ~ #content5 {
+        display: block;
+        padding: 20px;
+        background: #fff;
+        color: #999;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tab_container .tab-content p,
+    .tab_container .tab-content h3 {
+        -webkit-animation: fadeInScale 0.7s ease-in-out;
+        -moz-animation: fadeInScale 0.7s ease-in-out;
+        animation: fadeInScale 0.7s ease-in-out;
+    }
+
+    .tab_container .tab-content h3 {
+        text-align: center;
+    }
+
+    .tab_container [id^="tab"]:checked + label {
+        background: #fff;
+        box-shadow: inset 0 3px #0CE;
+    }
+
+        .tab_container [id^="tab"]:checked + label .fa {
+            color: #0CE;
+        }
+
+    label .fa {
+        font-size: 1.3em;
+        margin: 0 0.4em 0 0;
+    }
+    /*Media query*/
+    @@media only screen and (max-width: 930px) {
+        label span {
+            font-size: 14px;
+        }
+
+        label .fa {
+            font-size: 13px;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+
+        label .fa {
+            font-size: 16px;
+        }
+
+        .tab_container {
+            width: 98%;
+        }
+
+        .leave-status-tabular label {
+            width: 44%;
+        }
+    }
+    /*Content Animation*/
+    @@keyframes fadeInScale {
+        0% {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    /*tabbing design ends*/
+
+    .mdl-data-table__cell--non-numeric.mdl-data-table__cell--non-numeric {
+        text-align: center
+    }
+
+    .btn-primary {
+        cursor: pointer;
+    }
+
+
+    /* 16-May-2019 */
+
+    label, #emp-leaves-list td, section#content1 select option, section#content1 h5, .dataTables_info, #emp-leaves-list_previous, #customReport_previous,
+    section#content2 select option, #customReport td, #customReport_next, #emp-leaves-list_next {
+        color: black !important;
+    }
+</style>
+
+<main id="reports" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                    <div class="date-wrapper">
+                        @Html.Hidden("cookieValue")
+
+                        @* new design changes in tabular form *@
+                        <div class="leave-status-tabular">
+                            <div class="container">
+                                <div class="tab_container">
+                                    <input id="tab1" type="radio" name="tabs" checked>
+                                    <label for="tab1"><span>Monthly Report</span></label>
+
+                                    <input id="tab2" type="radio" name="tabs">
+                                    <label for="tab2"><span>Custom Report</span></label>
+
+                                    <section id="content1" class="tab-content">
+                                        <div class="row">
+                                            <div class="large-6 columns col-sm-4 mb-2 d-flex">
+                                                <label for="start">Department</label>
+                                                @*<label for="start">Start Date</label>*@
+                                                <select id="Department" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.DepartmentsFilterList" onchange="DepartmentFilter(this.value)">
+                                                    <option value="0" selected>Select Department</option>
+                                                </select><br />
+                                                @*<input id="start" type="date" /><br />*@
+                                            </div>
+                                            <div class="large-6 columns col-sm-4 mb-2 d-flex">
+                                                <label for="end">Employee</label>
+                                                @*<label for="end">End Date</label>*@
+                                                <select id="Employee" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.EmployeeFilterList" onchange="EmployeeFilter(this.value)">
+                                                    <option value="0" selected>Select Employee</option>
+                                                </select><br />
+                                                @*<input id="start" type="date" /><br />*@
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <button class="btn-primary" id="filter" onclick="AddFilter();">Search</button>
+                                                <button id="clearFilter" class="button btn-primary" onclick="ClearFilter();">Clear Filter</button>
+                                                <button class="btn-primary" onclick="ExportExcel();">Export Monthly Leaves</button>
+                                            </div>
+
+                                            <div class="large-6 columns col-sm-5 mb-2 d-flex">
+                                                <label for="end">Select Duration</label>
+                                                @*<label for="end">End Date</label>*@
+                                                <select id="MonthlyReportFilter" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" asp-items="ViewBag.MonthlyReportFilterList"></select><br />
+                                                @*<input id="start" type="date" /><br />*@
+                                            </div>
+
+                                        </div>
+                                        <h5>Monthly Leave Report For <span id="HeadingArea">@ViewData["Heading"]</span></h5>
+                                        <div class="row col-sm-12 EmpTableList">
+                                        </div>
+                                    </section>
+
+                                    <section id="content2" class="tab-content">
+                                        <div class="row">
+                                            <div class="large-6 columns col-sm-4 mb-2">
+
+                                                <label for="start">Start Date</label>
+                                                <input id="start" type="date" /><br />
+                                            </div>
+                                            <div class="large-6 columns col-sm-4 mb-2">
+                                                <label for="end">End Date</label>
+                                                <input id="end" type="date" /><br />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <button class="btn-primary" id="filter" onclick="AddDateFilter();">Search</button>
+                                                <button id="clearFilter" class="button btn-primary" onclick="ClearDateFilter();">Clear Filter</button>
+                                                <button class="btn-primary" onclick="CustomExportToExcel();">Export To Excel</button>
+                                            </div>
+
+                                            <div class="large-6 columns col-sm-4 mb-2 d-flex">
+                                                <label for="start">Department</label>
+                                                @*<label for="start">Start Date</label>*@
+                                                <select id="DepartmentCustom" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.DepartmentsFilterList" onchange="DepartmentFilterForCustom(this.value)">
+                                                    <option value="0" selected>Select Department</option>
+                                                </select><br />
+                                                @*<input id="start" type="date" /><br />*@
+                                            </div>
+
+                                            @*<div class="large-6 columns col-sm-4 mb-2 d-flex">
+                                                    <label for="end">Employee</label>
+                                                    <label for="end">End Date</label>
+                                                    <select id="EmployeeCustom" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.EmployeeFilterList" onchange="EmployeeFilterForCustom(this.value)">
+                                                        <option value="0" selected>Select Employee</option>
+                                                    </select><br />
+                                                    <input id="start" type="date" /><br />
+                                                </div>*@
+
+                                        </div>
+                                        <div class="row col-sm-12 CustomTableList">
+                                        </div>
+                                    </section>
+
+                                </div>
+                            </div>
+                        </div>
+                        @* ends of tabular form design *@
+
+                    </div>
+
+                </div>
+
+
+
+                @*<div class="mid--box row justify-content-center">
+                        <div class="date-wrapper">
+                            <div class="row">
+                                <div class="large-6 columns col-sm-4 mb-2">
+                                    <label for="start">Department</label>
+                                    <label for="start">Start Date</label>
+                                    <select id="Department" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.DepartmentsFilterList" onchange="DepartmentFilter(this.value)">
+                                        <option value="0" selected>Select Department</option>
+                                    </select><br />
+                                    <input id="start" type="date" /><br />
+                                </div>
+                                <div class="large-6 columns col-sm-4 mb-2">
+                                    <label for="end">Employee</label>
+                                    <label for="end">End Date</label>
+                                    <select id="Employee" aria-controls="dept-Filterlist" class="form-control DeptFilterlists input-group-sm" title="Select Department" asp-items="ViewBag.EmployeeFilterList" onchange="EmployeeFilter(this.value)">
+                                        <option value="0" selected>Select Employee</option>
+                                    </select><br />
+                                    <input id="start" type="date" /><br />
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn-primary" id="filter" onclick="AddFilter();">Filter</button>
+                                    <button id="clearFilter" class="button btn-primary" onclick="ClearFilter();">Clear Filter</button>
+                                    <button class="btn-primary" onclick="ExportExcel();">Export Monthly Leaves</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-sm-12 EmpTableList">
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $('#EmployeDeatils_List').addClass('active');
+        $('#start').change(function () {
+            $('#end').val("");
+            var st = $('#start').val();
+            $("#end").attr("min", st);
+        });
+
+        $("#end").keyup(function () {
+
+            var st = $('#start').val();
+            if (st != undefined && st != "") {
+                if (st > $("#end").val()) { $("#end").val(st); }
+            }
+        });
+        $('#end').click(function () {
+
+            var st = $('#start').val();
+            if (st != undefined && st != "") {
+                if (st > $("#end").val()) { $("#end").val(st); }
+
+            }
+        });
+
+        AllList(0, 0, "");
+        var d = new Date();
+        AllCustomList();
+    });
+
+    function ExportExcel() {
+
+        //$('#cookieValue').val(Date.now().toString());
+        //console.log($('#cookieValue').val(Date.now().toString()));
+
+        //$('.lds-wrapper').show();
+        var EmpID = $('#Employee').val();
+        var DeptID = $('#Department').val();
+        var MonthSelected = $('#MonthlyReportFilter').val();
+        let url = '/Leaves/Download?DeptID=' + DeptID + '&EmpID=' + EmpID + '&MnthSelected=' + MonthSelected;
+        //window.location = url;
+        window.open(url, '_blank');
+
+        //_tmr = window.setInterval(function () {
+        //    debugger
+        //    var _str = 'dlc=' + $('#cookieValue').val();
+        //    if (document.cookie.indexOf(_str) !== -1) {
+        //        // hide animation
+        //        $('.lds-wrapper').hide();
+        //    } $('.lds-wrapper').hide();
+        //}, 100);
+        //('.lds-wrapper').hide();
+    }
+
+    function AllList(DeptID, EmpID, MonthSelected) {
+
+        $('.lds-wrapper').show();
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/EmployeDataTable?DeptID=' + DeptID + '&EmpID=' + EmpID + '&MnthSelected=' + MonthSelected,
+                success: function (response) {
+                    $('.lds-wrapper').hide();
+                    $('.EmpTableList').append(response);
+                    $('#emp-leaves-list').DataTable({
+                        "ordering": false,
+                        columnDefs: [
+                            {
+                                targets: [0, 1, 2],
+                                className: 'mdl-data-table__cell--non-numeric'
+                            }
+                        ]
+                    });
+                }
+            });
+    }
+
+    function DepartmentFilter(DepId) {
+
+        var EmpID = $('#Employee').val();
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/DepartmentFilter?DeptID=' + DepId,
+                success: function (response) {
+                    console.log(response);
+                    $("#Employee").find('option').remove();
+                    $("#Employee").append($("<option></option>").val("0").html("Select Employee"));
+                    $.each(response.empList, function (key, value) {
+                        //$("#Employee").empty();
+                        $("#Employee").append($("<option></option>").val(value.id).html(value.emp_id));
+                    });
+                    //$('.EmpTableList').empty();
+                    //$('.EmpTableList').append(response.employeDeatils);
+
+                }
+            });
+
+    }
+
+    function EmployeeFilter(EmpId) {
+        var DeptID = $('#Department').val();
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/EmployeDataTable?DeptID=' + DeptID + '&EmpID=' + EmpId,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+    }
+    function ClearFilter() {
+        $('#Department').val(0);
+        $('#Employee').val(0);
+        $('.EmpTableList').empty();
+
+        AllList(0, 0, "");
+    }
+
+    function AddFilter() {
+        var EmpID = $('#Employee').val();
+        var DeptID = $('#Department').val();
+        var MonthSelected = $('#MonthlyReportFilter').val();
+        $('.EmpTableList').empty();
+        $('#HeadingArea').empty();
+        $('#HeadingArea').append(MonthSelected);
+        AllList(DeptID, EmpID, MonthSelected);
+    }
+
+    function AllCustomList() {
+        var First = 1;
+        //$('.lds-wrapper').show();
+        var StartDate = $('#start').val();
+        var EndDate = $('#end').val();
+        var departmentCustom = $('#DepartmentCustom').val();
+        var employeeCustom = $('#EmployeeCustom').val();
+        if ((StartDate == undefined && EndDate == undefined) || (StartDate == "" && EndDate == "")) {
+            First = 2;
+        }
+        if (First == 1) {
+            $('.lds-wrapper').show();
+            if (StartDate == undefined || EndDate == undefined || StartDate == "" || EndDate == "") {
+                $('.lds-wrapper').hide();
+                alert("Please select Start Date and End Date!");
+                return;
+            }
+        }
+
+
+        if (StartDate == undefined) {
+            StartDate = null;
+        }
+        if (EndDate == undefined) {
+            EndDate = null;
+        }
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/CustomDataTable?StartDate=' + StartDate + '&EndDate=' + EndDate + '&DeptID=' + departmentCustom + '&EmpID=' + employeeCustom,
+                success: function (response) {
+                    if (First == 1) { $('.lds-wrapper').hide(); }
+                    //$('.lds-wrapper').hide();
+                    $('.CustomTableList').empty();
+                    $('.CustomTableList').append(response);
+                    $('#customReport').DataTable({
+                        "ordering": false,
+                        columnDefs: [
+                            {
+                                targets: [0, 1, 2],
+                                className: 'mdl-data-table__cell--non-numeric'
+                            }
+                        ]
+                    });
+                }
+            });
+    }
+
+    function CustomExportToExcel() {
+        $('.lds-wrapper').show();
+        var First = 1;
+
+        var StartDate = $('#start').val();
+        var EndDate = $('#end').val();
+
+        var departmentCustom = $('#DepartmentCustom').val();
+        var employeeCustom = $('#EmployeeCustom').val();
+        if ((StartDate == undefined && EndDate == undefined) || (StartDate == "" && EndDate == "")) {
+            First = 2;
+        }
+
+        if (First == 1) {
+            if (StartDate == undefined || EndDate == undefined || StartDate == "" || EndDate == "") {
+                $('.lds-wrapper').hide();
+                alert("Please Start Date and End Date!");
+                return;
+            }
+        }
+        if (StartDate == undefined) {
+            StartDate = null;
+        }
+        if (EndDate == undefined) {
+            EndDate = null;
+        }
+        //var EmpID = $('#Employee').val();
+        //var DeptID = $('#Department').val();
+        let url = '/Leaves/DownloadCustomReport?StartDate=' + StartDate + '&EndDate=' + EndDate + '&DeptID=' + departmentCustom + '&EmpID=' + employeeCustom;
+        //window.location = url;
+        window.open(url, '_blank');
+        $('.lds-wrapper').hide();
+    }
+
+    function AddDateFilter() {
+        AllCustomList();
+    }
+    function ClearDateFilter() {
+        $('#start').val("");
+        $('#end').val("");
+        $('#end').removeAttr("min");
+        $('#DepartmentCustom').val(0);
+        $('#EmployeeCustom').val(0);
+        AllCustomList();
+    }
+
+
+    function DepartmentFilterForCustom(DepId) {
+
+        var EmpID = $('#EmployeeCustom').val();
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/DepartmentFilter?DeptID=' + DepId,
+                success: function (response) {
+                    console.log(response);
+                    $("#EmployeeCustom").find('option').remove();
+                    $("#EmployeeCustom").append($("<option></option>").val("0").html("Select Employee"));
+                    $.each(response.empList, function (key, value) {
+                        //$("#Employee").empty();
+                        $("#EmployeeCustom").append($("<option></option>").val(value.id).html(value.emp_id));
+                    });
+                    //$('.EmpTableList').empty();
+                    //$('.EmpTableList').append(response.employeDeatils);
+
+                }
+            });
+
+    }
+
+    function EmployeeFilterForCustom(EmpId) {
+        var DeptID = $('#DepartmentCustom').val();
+        $.ajax(
+            {
+                type: 'GET',
+                //dataType: 'JSON',
+                url: '/Leaves/EmployeDataTable?DeptID=' + DeptID + '&EmpID=' + EmpId,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+    }
+</script>
+

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.CustomLeaveDetail>
+
+
+<table class="table" id="customReport">
+    <thead>
+        <tr>
+            <th>
+                Employee Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Total Allocated Leaves
+            </th>
+            <th>
+                Total Leaves Taken
+            </th>
+            <th>
+                Casual Leaves Taken
+            </th>
+            <th>
+                Sick Leaves Taken
+            </th>
+            <th>
+                Earned Leaves Taken
+            </th>
+            <th>
+                Leaves Without Pauy Taken
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAllocatedLeaves)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalLeavesTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CasualLeavesTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SickLeavesTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaidLeavesTaken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LWPTaken)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

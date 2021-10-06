@@ -1,0 +1,81 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.EmployeesLeaveDetails>
+
+<div class="table-responsive">
+    <table class="table" id="emp-leaves-list">
+        <thead>
+            <tr>
+                <th>
+                    Emp Code
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Designation
+                </th>
+                <th>
+                    Grade
+                </th>
+                <th>
+                    DOJ
+                </th>
+
+                @*<th>
+                        ConfirmationDate
+                    </th>*@
+                <th>
+                    ConfirmationStatus
+                </th>
+                @*<th>
+                    TotalDays
+                </th>
+                <th>
+                    PayableDays
+                </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dept)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Designation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOJ)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ConfirmationDate)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConfirmationStatus)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.TotalDays)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayableDays)
+                    </td>*@
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>
+

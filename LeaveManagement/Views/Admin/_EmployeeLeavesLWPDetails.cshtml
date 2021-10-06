@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.GetEmployeeLeavesHistory_LWP>
+
+
+<table class="table" id="lwpList">
+    <thead>
+        <tr>
+            <th>
+                Applied On
+            </th>
+            <th>
+                Leave Start Date
+            </th>
+            <th>
+                Leave End Date
+            </th>
+            <th>
+                Total Days
+            </th>
+            <th>
+                Leave Type
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppliedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeaveType)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

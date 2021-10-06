@@ -1,0 +1,175 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.EmpLeavesStatus>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int counter = 1;
+}
+
+
+<main id="LeaveSummary" role="main-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 parent">
+                <div class="mid--box row justify-content-center">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table" id="emp-list">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">
+                                            Leave Type
+                                        </th>
+                                        <th scope="col">
+                                            Applied On
+                                        </th>
+                                        <th scope="col">
+                                            Date
+                                        </th>
+                                        <th scope="col">
+                                            Total Days
+                                        </th>
+                                        <th scope="col">
+                                            Leave Reason
+                                        </th>
+                                        <th scope="col">
+                                            First Line Manager
+                                        </th>
+                                        <th scope="col">
+                                            Second Line Manager
+                                        </th>
+                                        <th scope="col">
+                                            HR Representative
+                                        </th>
+                                        <th scope="col">
+                                            Leave Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LeaveType)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AppliedOn)
+                                            </td>
+                                            @*<td>
+                                                    @item.LeaveStartDate.ToString("dd MMM yyyy")  <span>To</span>  @item.LeaveEndDate.ToString("dd MMM yyyy")
+                                                </td>*@
+                                            <td>
+                                                @item.LeaveStartDate  <span>To</span>  @item.LeaveEndDate
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ActualCount)
+                                            </td>
+                                            <td>
+                                                <span class="reason" data-toggle="tooltip" data-placement="left" title="@item.LeaveReason">@Html.DisplayFor(modelItem => item.LeaveReason)</span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FirstLineMangerName)
+                                                @if (item.FirstLineMangerStatus == "Pending")
+                                                {
+                                                    <spam class="btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="@item.FirstLineMangerComment">
+                                                        @Html.DisplayFor(modelItem => item.FirstLineMangerStatus)
+                                                    </spam>
+                                                }
+                                                else if (item.FirstLineMangerStatus == "Approved")
+                                                {
+                                                    <spam class="btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="@item.FirstLineMangerComment">
+                                                        @Html.DisplayFor(modelItem => item.FirstLineMangerStatus)
+                                                    </spam>
+                                                }
+                                                else if (item.FirstLineMangerStatus == "Rejected")
+                                                {
+                                                    <spam class="btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="@item.FirstLineMangerComment">
+                                                        @Html.DisplayFor(modelItem => item.FirstLineMangerStatus)
+                                                    </spam>
+                                                }
+                                                @*<a href="#" data-toggle="tooltip" data-placement="bottom" title="@item.FirstLineMangerComment">@Html.DisplayFor(modelItem => item.FirstLineMangerStatus)</a>*@
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SecondLineMangerName)
+                                                @if (item.SecondLineMangerName != null && item.SecondLineMangerName != "")
+                                                {
+                                                    @if (item.FirstLineMangerStatus == "Pending")
+                                                    {
+                                                        <spam class="btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="@item.SecondLineManagerComment">
+                                                            @Html.DisplayFor(modelItem => item.SecondLineManagerStatus)
+                                                        </spam>
+                                                    }
+                                                    else if (item.SecondLineManagerStatus == "Approved")
+                                                    {
+                                                        <spam class="btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="@item.SecondLineManagerComment">
+                                                            @Html.DisplayFor(modelItem => item.SecondLineManagerStatus)
+                                                        </spam>
+                                                    }
+                                                    else if (item.SecondLineManagerStatus == "Rejected")
+                                                    {
+                                                        <spam class="btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="@item.SecondLineManagerComment">
+                                                            @Html.DisplayFor(modelItem => item.SecondLineManagerStatus)
+                                                        </spam>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HRName)
+                                                @if (item.HRName != null && item.HRName != "")
+                                                {
+                                                    @if (item.Hr_Status == "Pending")
+                                                    {
+                                                        <spam class="btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="@item.Hr_Comment">
+                                                            @Html.DisplayFor(modelItem => item.Hr_Status)
+                                                        </spam>
+                                                    }
+                                                    else if (item.Hr_Status == "Approved")
+                                                    {
+                                                        <spam class="btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="@item.Hr_Comment">
+                                                            @Html.DisplayFor(modelItem => item.Hr_Status)
+                                                        </spam>
+
+                                                    }
+                                                    else if (item.Hr_Status == "Rejected")
+                                                    {
+                                                        <spam class="btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="@item.Hr_Comment">
+                                                            @Html.DisplayFor(modelItem => item.Hr_Status)
+                                                        </spam>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EmpLeaveStatus)
+                                            </td>
+                                        </tr>
+                                        counter = counter + 1;
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#Leave_Summary').addClass('active');
+        $('#emp-list').DataTable({
+            "ordering": false,
+            "searching": false,
+            "bPaginate": false,
+            columnDefs: [
+                {
+                    targets: [0, 1, 2],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        });
+        //$('#emp-list').DataTable();
+    });
+</script>

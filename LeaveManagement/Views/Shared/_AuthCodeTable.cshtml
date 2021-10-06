@@ -1,0 +1,89 @@
+﻿@model IEnumerable<LeaveManagement.Models.SpModels.EmployeeList_withCode>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<table class="table" id="EmployeeCodeList">
+    <thead>
+        <tr>
+            <th>
+                Emp Code
+            </th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Email ID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOJ)
+            </th>
+            <th>
+                Mobile Authentication Code
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmpCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmpID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOJ)
+                </td>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(item.RandomCode))
+                    {
+                        /**/
+                        <a class="send-random-code" onclick="sendRandomCodeEmail(@item.UserID);">Send</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.RandomCode)
+                    }
+
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="hidden">
+    <a class="url-RandomCodeGenerator-GenerateCode" asp-controller="RandomCodeGenerator" asp-action="GenerateCode"></a>
+</div>
+<script>
+    function sendRandomCodeEmail(userID) {
+        $('.lds-wrapper').show();
+        var is_Confirmed = confirm("Do you want to generate a code?");
+        if (!is_Confirmed) {
+            $('.lds-wrapper').hide();
+            return;
+        }
+        let url = $('.url-RandomCodeGenerator-GenerateCode').attr('href');
+        url = url + '?userID=' + userID;
+        $.ajax({
+            url: url,
+            success: (res) => {
+                if (res) {
+                    LoadAuthCodeGrid();
+                    $('.lds-wrapper').hide();
+                }
+                console.log(res);
+            }
+        });
+    }
+</script>
