@@ -6,6 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\AMS API\PublsihedCode</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\user\Downloads\Publish</_PublishTargetUrl>
+    <History>True|2021-10-07T08:27:10.3802227Z;</History>
   </PropertyGroup>
 </Project>

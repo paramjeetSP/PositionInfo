@@ -13,66 +13,72 @@
         <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
         <input type="hidden" id="Name" name="custName" value="@HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value">
         <div class="modal-body">
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Title</label>
-                    @Html.TextBoxFor(m => m.Title)
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Title</label>
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Department</label>
+                        @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>No. of Positions</label>
+                        @Html.TextBoxFor(m => m.NoOfPosition, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Priority</label>
+                        @Html.DropDownListFor(m => m.Priority, new SelectList(Enum.GetValues(typeof(Priority))), "Select Status", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Budget</label>
+                        @Html.TextBoxFor(m => m.Budget, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Expected Closing Date</label>
+                        @Html.EditorFor(m => m.ExpectedDate, new { @class = "form-control", @type = "date" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Experience</label>
+                        @Html.TextBoxFor(m => m.Experience, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Status</label>
+                        @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status", new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Skills</label>
-                    @Html.TextAreaFor(m => m.Skills)
+            <div class="row">
+                
+                <div class="col-sm-12">
+                    <div class="d--box">
+                        <label>Skills</label>
+                        @Html.TextAreaFor(m => m.Skills, new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Department</label>
-                    @Html.TextBoxFor(m => m.Department)
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>No. of Positions</label>
-                    @Html.TextBoxFor(m => m.NoOfPosition)
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Priority</label>
-                    @Html.DropDownListFor(m => m.Priority, new SelectList(Enum.GetValues(typeof(Priority))), "Select Status")
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Budget</label>
-                    @Html.TextBoxFor(m => m.Budget)
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Expected Closing Date</label>
-                    @Html.EditorFor(m => m.ExpectedDate, new { @type = "date" })
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Experience</label>
-                    @Html.TextBoxFor(m => m.Experience)
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Status</label>
-                    @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status")
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="SaveEditData()" data-dismiss="modal">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </div>
 </div>
 <script>
     function SaveEditData() {
@@ -102,3 +108,47 @@
         });
     }
 </script>
+<style>
+    input#ExpectedDate {
+        display: block;
+        width: 100%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    h4.modal-title {
+        margin-top: 0;
+        color: #fff;
+        /* margin-bottom: 17px !important; */
+    }
+    .modal-header {
+        background: #28bdf0;
+        padding-bottom: 22px;
+    }
+        .modal-header .close {
+            color: #fff;
+            opacity: 1;
+        }
+    .modal-body .d--box {
+        padding-bottom: 15px;
+    }
+    .modal-body label {
+        display: inline-block;
+        margin-bottom: 2px;
+        color: #4c4c4c;
+        font-weight: 600;
+    }
+    input#ExpectedDate:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    }
+</style>

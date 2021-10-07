@@ -9,39 +9,42 @@
         </div>
         <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
         <div class="modal-body">
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>On Bench</label>
-                    @Html.CheckBoxFor(m => m.OnBench)
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>On Bench</label>
+                        @Html.CheckBoxFor(m => m.OnBench)
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Partial Available</label>
-                    @Html.CheckBoxFor(m => m.PartialAvailable)
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Partial Available</label>
+                        @Html.CheckBoxFor(m => m.PartialAvailable)
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Expected Partial Available Date</label>
-                    @Html.EditorFor(model => model.ExpPartialDate, new { @type = "date" })
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Expected Partial Available Date</label>
+                        @Html.EditorFor(model => model.ExpPartialDate, new { @type = "date",  @class = "form-control"  })
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Skill Set</label>
-                    @Html.TextAreaFor(m => m.Skillset)
+
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Current Project Name</label>
+                        @Html.TextBoxFor(m => m.CurrentProjName, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="d--box">
-                    <label>Current Project Name</label>
-                    @Html.TextBoxFor(m => m.CurrentProjName)
+                <div class="col-sm-12">
+                    <div class="d--box">
+                        <label>Skill Set</label>
+                        @Html.TextAreaFor(m => m.Skillset, new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="SaveEditData()" data-dismiss="modal">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -69,3 +72,53 @@
         });
     }
 </script>
+<style>
+    input#ExpPartialDate {
+        display: block;
+        width: 100%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    h4.modal-title {
+        margin-top: 0;
+        color: #fff;
+        /* margin-bottom: 17px !important; */
+    }
+
+    .modal-header {
+        background: #28bdf0;
+        padding-bottom: 22px;
+    }
+
+        .modal-header .close {
+            color: #fff;
+            opacity: 1;
+        }
+
+    .modal-body .d--box {
+        padding-bottom: 15px;
+    }
+
+    .modal-body label {
+        display: inline-block;
+        margin-bottom: 2px;
+        color: #4c4c4c;
+        font-weight: 600;
+    }
+
+    input#ExpPartialDate:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    }
+</style>

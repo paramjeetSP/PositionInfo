@@ -9,7 +9,7 @@
             <div class="col-md-12 parent">
                 <div class="mid--box row justify-content-center">
                     <div class="col-sm-12">
-                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="initateEdit(0)">Add</button>
+                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default add_btn" onclick="initateEdit(0)">Add</button>
                         <table class="table" id="emp-list">
                             <thead>
                                 <tr>
@@ -137,3 +137,30 @@
         //$('#emp-list').DataTable();
     });
 </script>
+<style>
+    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .btn {
+        padding: 5px 15px;
+        border-radius: 3px;
+        margin:0;
+    }
+
+    #emp-list_wrapper .table tr th {
+        white-space: nowrap;
+    }
+
+    #emp-list_wrapper .table tr td {
+        white-space: nowrap;
+        padding: 4px 5px;
+        vertical-align: middle;
+    }
+    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
+        padding: 3px 5px;
+        height: 25px;
+    }
+    .mdl-button {
+        height: 30px;
+    }
+    .add_btn {
+      margin-left:16px !important;
+    }
+</style>
