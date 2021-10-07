@@ -9,7 +9,7 @@
             <div class="col-md-12 parent">
                 <div class="mid--box row justify-content-center">
                     <div class="col-sm-12">
-                        <button>Add</button>
+                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" onclick="initateEdit(0)">Add</button>
                         <table class="table" id="emp-list">
                             <thead>
                                 <tr>
@@ -109,7 +109,7 @@
     function initateEdit(LeaveRowID) {
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("EditEmpResourse", "PositionInfo")',
+            url: '@Url.Action("EditEmpResourse", "PositionHRInfo")',
             data: { ID: LeaveRowID },
           //  contentType: "application/json; charset=utf-8",
             success: function (response) {

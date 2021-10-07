@@ -121,7 +121,8 @@ namespace LeaveManagement.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Admin");
+                    //return RedirectToAction("Index", "Dashboard");
                 }
             }
             else

@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagement.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private Recovered_hrmsnewContext _context;
@@ -172,6 +172,36 @@ namespace LeaveManagement.Controllers
         public async Task<IActionResult> TopLeaveDept()
         {
             var leaves = await model.TotalDeptLeaves();
+            List<GraphModel> graph = leaves.Select(x => new GraphModel
+            {
+                y = x.ActualCount,
+                name = x.DeptName
+            }).ToList();
+            return Json(graph);
+        }
+        public async Task<IActionResult> TopLeaveDept1()
+        {
+            var leaves = await model.TotalDeptLeaves1();
+            List<GraphModel> graph = leaves.Select(x => new GraphModel
+            {
+                y = x.ActualCount,
+                name = x.DeptName
+            }).ToList();
+            return Json(graph);
+        }
+        public async Task<IActionResult> TopLeaveDept2()
+        {
+            var leaves = await model.TotalDeptLeaves2();
+            List<GraphModel> graph = leaves.Select(x => new GraphModel
+            {
+                y = x.ActualCount,
+                name = x.DeptName
+            }).ToList();
+            return Json(graph);
+        }
+        public async Task<IActionResult> TopLeaveDept3()
+        {
+            var leaves = await model.TotalDeptLeaves3();
             List<GraphModel> graph = leaves.Select(x => new GraphModel
             {
                 y = x.ActualCount,

@@ -123,6 +123,28 @@ namespace LeaveManagement.BAL
                 return null;
             }
         }
+        public async Task<HrpositionInfo> editHREmpRes(int ID)
+        {
+            try
+            {
+                HrpositionInfo employeeResDetails = new HrpositionInfo();
+                var data = await _context.HrpositionInfo.Where(x => x.Id == ID).FirstOrDefaultAsync();
+                if(data != null)
+                {
+                    employeeResDetails = data;
+                }
+                else
+                {
+                    employeeResDetails.Id = 0;
+                }
+                return employeeResDetails;
+            }
+            catch (Exception ex)
+            {
+                // _logging.LogToDb(ex, "ControllerName: DashboardViewModel, methodName: pendingLeaves, Parameter: userId" + userId, "WEB/API");
+                return null;
+            }
+        }
         public async Task<bool> updateEmpResData(EmployeeResDetails updateLeaveData)
         {
             try
@@ -141,6 +163,51 @@ namespace LeaveManagement.BAL
                 employeeAvailability.CurrentProjName = updateLeaveData.CurrentProjName;
                 _context.EmployeeAvailability.Add(employeeAvailability);
                 _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // _logging.LogToDb(ex, "ControllerName: DashboardViewModel, methodName: pendingLeaves, Parameter: userId" + userId, "WEB/API");
+                return false;
+            }
+        }
+
+        public async Task<bool> updateEmpHRResData(HrpositionInfo updateLeaveData)
+        {
+            try
+            {
+                var data = await _context.HrpositionInfo.Where(x => x.Id == updateLeaveData.Id).FirstOrDefaultAsync();
+                if (data != null)
+                {
+                    data.Title = updateLeaveData.Title;
+                    data.Skills = updateLeaveData.Skills;
+                    data.Department = updateLeaveData.Department;
+                    data.NoOfPosition = updateLeaveData.NoOfPosition;
+                    data.Priority = updateLeaveData.Priority;
+                    data.Budget = updateLeaveData.Budget;
+                    data.ExpectedDate = updateLeaveData.ExpectedDate;
+                    data.Experience = updateLeaveData.Experience;
+                    data.Status = updateLeaveData.Status;
+                    _context.HrpositionInfo.Update(data);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    HrpositionInfo employeeAvailability = new HrpositionInfo();
+                    employeeAvailability.Title = updateLeaveData.Title;
+                    employeeAvailability.CreatedOn = DateTime.Now;
+                    employeeAvailability.Skills = updateLeaveData.Skills;
+                    employeeAvailability.Department = updateLeaveData.Department;
+                    employeeAvailability.NoOfPosition = updateLeaveData.NoOfPosition;
+                    employeeAvailability.Priority = updateLeaveData.Priority;
+                    employeeAvailability.Budget = updateLeaveData.Budget;
+                    employeeAvailability.ExpectedDate = updateLeaveData.ExpectedDate;
+                    employeeAvailability.Experience = updateLeaveData.Experience;
+                    employeeAvailability.Status = updateLeaveData.Status;
+                    employeeAvailability.RequestedBy = updateLeaveData.RequestedBy;
+                    _context.HrpositionInfo.Add(employeeAvailability);
+                    _context.SaveChanges();
+                }
                 return true;
             }
             catch (Exception ex)
@@ -599,7 +666,49 @@ namespace LeaveManagement.BAL
         {
             try
             {
-                List<TotalLeaveByDepartment> leaves = await _context.Set<TotalLeaveByDepartment>().FromSql("[dbo].[HRMS_GetTotalLeaveByDepartment]").ToListAsync();
+                List<TotalLeaveByDepartment> leaves = await _context.Set<TotalLeaveByDepartment>().FromSql("[dbo].[HRMS_GetTotalPartialAvailDepartment]").ToListAsync();
+                return leaves;
+            }
+            catch (Exception ex)
+            {
+                _logging.LogToDb(ex, "ControllerName: DashboardViewModel, methodName: TotalDeptLeaves, Parameter: NULL", "WEB/API");
+                return null;
+            }
+
+        }
+        public async Task<List<TotalLeaveByDepartment>> TotalDeptLeaves1()
+        {
+            try
+            {
+                List<TotalLeaveByDepartment> leaves = await _context.Set<TotalLeaveByDepartment>().FromSql("[dbo].[HRMS_GetTotalBechAvailDepartment]").ToListAsync();
+                return leaves;
+            }
+            catch (Exception ex)
+            {
+                _logging.LogToDb(ex, "ControllerName: DashboardViewModel, methodName: TotalDeptLeaves, Parameter: NULL", "WEB/API");
+                return null;
+            }
+
+        }
+        public async Task<List<TotalLeaveByDepartment>> TotalDeptLeaves2()
+        {
+            try
+            {
+                List<TotalLeaveByDepartment> leaves = await _context.Set<TotalLeaveByDepartment>().FromSql("[dbo].[HRMS_GetTotalOpenPositionlDepartment]").ToListAsync();
+                return leaves;
+            }
+            catch (Exception ex)
+            {
+                _logging.LogToDb(ex, "ControllerName: DashboardViewModel, methodName: TotalDeptLeaves, Parameter: NULL", "WEB/API");
+                return null;
+            }
+
+        }
+        public async Task<List<TotalLeaveByDepartment>> TotalDeptLeaves3()
+        {
+            try
+            {
+                List<TotalLeaveByDepartment> leaves = await _context.Set<TotalLeaveByDepartment>().FromSql("[dbo].[HRMS_GetTotalClosedPositionlDepartment]").ToListAsync();
                 return leaves;
             }
             catch (Exception ex)

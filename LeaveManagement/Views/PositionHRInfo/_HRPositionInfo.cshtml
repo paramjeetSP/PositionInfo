@@ -1,0 +1,104 @@
+﻿@model LeaveManagement.Database.HrpositionInfo
+@using LeaveManagement.Enum
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" style="position: absolute;">Add/Edit Employee Details</h4>
+        </div>
+        <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
+        <input type="hidden" id="Name" name="custName" value="@HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value">
+        <div class="modal-body">
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Title</label>
+                    @Html.TextBoxFor(m => m.Title)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Skills</label>
+                    @Html.TextAreaFor(m => m.Skills)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Department</label>
+                    @Html.TextBoxFor(m => m.Department)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>No. of Positions</label>
+                    @Html.TextBoxFor(m => m.NoOfPosition)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Priority</label>
+                    @Html.DropDownListFor(m => m.Priority, new SelectList(Enum.GetValues(typeof(Priority))), "Select Status")
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Budget</label>
+                    @Html.TextBoxFor(m => m.Budget)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Expected Closing Date</label>
+                    @Html.EditorFor(m => m.ExpectedDate, new { @type = "date" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Experience</label>
+                    @Html.TextBoxFor(m => m.Experience)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="d--box">
+                    <label>Status</label>
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status")
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function SaveEditData() {
+        debugger
+        var model = {
+            Id: $('#LeaveRowID').val(),
+            Title: $('#Title').val(),
+            Skills: $('#Skills').val(),
+            Department: $('#Department').val(),
+            NoOfPosition: $('#NoOfPosition').val(),
+            Priority: $("#Priority option:selected").text(),
+            Budget: $('#Budget').val(),
+            ExpectedDate: $('#ExpectedDate').val(),
+            Experience: $('#Experience').val(),
+            Status: $("#Status option:selected").text(),
+            RequestedBy: $('#Name').val(),
+        };
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SaveBalanceLeaveChangesBasedID", "PositionHRInfo")',
+            data: { updateLeaveData: model },
+            success: function (response) {
+                    location.reload();
+            },
+            error: function (response) {
+            }
+        });
+    }
+</script>

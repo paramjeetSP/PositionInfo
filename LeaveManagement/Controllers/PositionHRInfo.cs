@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace LeaveManagement.Controllers
 {
@@ -24,6 +26,18 @@ namespace LeaveManagement.Controllers
         {
             var list = model.HREmployeesList();
             return View(list);
+        }
+
+        public async Task<IActionResult> EditEmpResourse(int ID)
+        {
+            var editLeaves = await model.editHREmpRes(ID);
+            return PartialView("_HRPositionInfo", editLeaves);
+        }
+
+        public async Task<IActionResult> SaveBalanceLeaveChangesBasedID(HrpositionInfo updateLeaveData)
+        {
+            bool editLeaves = await model.updateEmpHRResData(updateLeaveData);
+            return Json(new { success = editLeaves });
         }
     }
 }

@@ -57,6 +57,32 @@
         <div class="row justify-content-center">
             <div class="col-md-12 parent">
                 <div class="mid--box row justify-content-center">
+                    @*<div class="col-sm-6">
+            <div class="d--box">
+                <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="d--box">
+                <div id="ColumnChart3Dcontainer" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="d--box">
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <select aria-controls="dept-list" class="form-control Deptlists input-group-sm" asp-for="ID" asp-items="ViewBag.DepartmentsList" onchange="ColumnChart3D3DropDown(this.value)"></select>
+                </div>
+                <div id="containerWithDrpDown1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+
+                </div>
+            </div>
+        </div>*@
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>
+                    </div>
                     <div class="col-sm-6">
                         <div class="d--box">
                             <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
@@ -64,29 +90,18 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="d--box">
-                            <div id="ColumnChart3Dcontainer" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="d--box">
-                            <div class="form-group">
-                                <label class="control-label"></label>
-                                <select aria-controls="dept-list" class="form-control Deptlists input-group-sm" asp-for="ID" asp-items="ViewBag.DepartmentsList" onchange="ColumnChart3D3DropDown(this.value)"></select>
-                            </div>
-                            <div id="containerWithDrpDown1" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
-
-                            </div>
+                            <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="d--box">
-                            <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-                        </div>
-                    </div>
-                    <div class="monthYear">
-                        <div id="Month"></div>
-                        <div id="Year"></div>
-                    </div>
+                    @*<div class="monthYear">
+            <div id="Month"></div>
+            <div id="Year"></div>
+        </div>*@
                 </div>
             </div>
         </div>
@@ -107,15 +122,18 @@
     $(document).ready(function () {
         $('#Admin_Dashboard').addClass('active');
         //        PieChart();
-        ColumnChart3D();
-        PieChart1();
+        //ColumnChart3D();
+        //PieChart1();
 
-        ColumnChart3D2();
+        //ColumnChart3D2();
         ColumnChart3D3();
+        ColumnChart3D4();
+        ColumnChart3D5();
+        ColumnChart3D6();
 
         var DeptID = $(".Deptlists").val();
-        ColumnChart3D3DropDown(DeptID);
-        CalculateCurrentMonthYear();
+        //ColumnChart3D3DropDown(DeptID);
+        //CalculateCurrentMonthYear();
     });
     function PieChart() {
         $.ajax(
@@ -160,40 +178,6 @@
                                 data: response
                             }]
                         });
-                        //Highcharts.chart('container', {
-                        //    chart: {
-                        //        type: 'pie',
-                        //        options3d: {
-                        //            enabled: true,
-                        //            alpha: 45,
-                        //            beta: 0
-                        //        }
-                        //    },
-                        //    title: {
-                        //        text: 'Top 5 employees with Leaves'
-                        //    },
-                        //    tooltip: {
-                        //        pointFormat: '{series.name}: <b>{point.y:.1f}%</b>'
-                        //    },
-                        //    plotOptions: {
-                        //        pie: {
-                        //            allowPointSelect: true,
-                        //            cursor: 'pointer',
-                        //            depth: 35,
-                        //            dataLabels: {
-                        //                enabled: true,
-                        //                format: '{point.name}'
-                        //            }
-                        //        }
-                        //    },
-                        //    series: [{
-                        //        type: 'pie',
-                        //        name: 'Leaves',
-                        //        data: response
-                        //    }]
-                         //test
-                        //});
-
                     }
             });
     }
@@ -410,7 +394,190 @@
                                 }
                             },
                             title: {
-                                text: 'Department Wise Leave Status for Current Month'
+                                text: 'Department Wise Partial Available Resource Status'
+                            },
+                            subtitle: {
+                                // text: '3D donut in Highcharts'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    innerSize: 100,
+                                    depth: 45
+                                }
+                            },
+                            series: [{
+                                name: 'Leaves',
+                                data: response,
+                            }]
+                        });
+
+                    }
+            });
+
+    }
+
+    function ColumnChart3D4() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Admin/TopLeaveDept1',
+                success:
+                    function (response) {
+
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            var data1 = {
+                                "name": item.name,
+                                "y": item.y,
+                                "drilldown": item.name
+                            }
+                            emp.push(item.name);
+                            // emp.push(data1);
+                        }
+                        console.log('emp ', emp);
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+
+
+                        var chart = Highcharts.chart('container', {
+                            chart: {
+                                type: 'pie',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 45
+                                }
+                            },
+                            title: {
+                                text: 'Department Wise Fully Available Resource Status'
+                            },
+                            subtitle: {
+                                // text: '3D donut in Highcharts'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    innerSize: 100,
+                                    depth: 45
+                                }
+                            },
+                            series: [{
+                                name: 'Leaves',
+                                data: response,
+                            }]
+                        });
+
+                    }
+            });
+
+    }
+
+    function ColumnChart3D5() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Admin/TopLeaveDept2',
+                success:
+                    function (response) {
+
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            var data1 = {
+                                "name": item.name,
+                                "y": item.y,
+                                "drilldown": item.name
+                            }
+                            emp.push(item.name);
+                            // emp.push(data1);
+                        }
+                        console.log('emp ', emp);
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+
+
+                        var chart = Highcharts.chart('container3', {
+                            chart: {
+                                type: 'pie',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 45
+                                }
+                            },
+                            title: {
+                                text: 'Department Wise Open positions Status'
+                            },
+                            subtitle: {
+                                // text: '3D donut in Highcharts'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    innerSize: 100,
+                                    depth: 45
+                                }
+                            },
+                            series: [{
+                                name: 'Leaves',
+                                data: response,
+                            }]
+                        });
+
+                    }
+            });
+
+    }
+
+    function ColumnChart3D6() {
+        $.ajax(
+            {
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/Admin/TopLeaveDept3',
+                success:
+                    function (response) {
+
+                        console.log(response);
+                        var emp = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            var data1 = {
+                                "name": item.name,
+                                "y": item.y,
+                                "drilldown": item.name
+                            }
+                            emp.push(item.name);
+                            // emp.push(data1);
+                        }
+                        console.log('emp ', emp);
+                        var emp1 = [];
+                        for (var prop in response) {
+                            var item = response[prop];
+                            emp1.push(item.y);
+                        }
+
+
+
+                        var chart = Highcharts.chart('container4', {
+                            chart: {
+                                type: 'pie',
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 45
+                                }
+                            },
+                            title: {
+                                text: 'Department Wise Closed Positions Status'
                             },
                             subtitle: {
                                 // text: '3D donut in Highcharts'
