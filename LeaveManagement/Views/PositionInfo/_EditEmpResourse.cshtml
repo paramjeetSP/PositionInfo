@@ -61,7 +61,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("SaveBalanceLeaveChangesBasedID", "PositionInfo")',
+            url: '@Url.Action("SaveResChangesBasedID", "PositionInfo")',
             data: { updateLeaveData: model },
             success: function (response) {
                     location.reload();
@@ -89,7 +89,6 @@
     h4.modal-title {
         margin-top: 0;
         color: #fff;
-        /* margin-bottom: 17px !important; */
     }
 
     .modal-header {

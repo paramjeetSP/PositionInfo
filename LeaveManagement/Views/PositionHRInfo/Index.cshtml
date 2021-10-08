@@ -101,7 +101,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="BalanceLeaveModal" role="dialog">
+    <div class="modal fade" id="BalanceLeaveModal1" role="dialog">
     </div>
 </main>
 
@@ -112,9 +112,8 @@
             url: '@Url.Action("EditEmpResourse", "PositionHRInfo")',
             data: { ID: LeaveRowID },
             success: function (response) {
-                debugger
-                $('#BalanceLeaveModal').html(response);
-                $('#BalanceLeaveModal').modal('show');
+                $('#BalanceLeaveModal1').html(response);
+                $('#BalanceLeaveModal1').modal('show');
             },
             error: function (response) {
             }

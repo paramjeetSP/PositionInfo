@@ -90,21 +90,19 @@
 <script>
     $(document).ready(function () {
         $('#Admin_Dashboard').addClass('active');
-        ColumnChart3D3();
-        ColumnChart3D4();
-        ColumnChart3D5();
-        ColumnChart3D6();
+        PartialAvailable();
+        FullAvailable();
+        OpenPosition();
+        ClosedPosition();
     });
-    function ColumnChart3D3() {
+    function PartialAvailable() {
         $.ajax(
             {
                 type: 'GET',
                 dataType: 'JSON',
-                url: '/Admin/TopLeaveDept',
+                url: '/Admin/PartialAvailable',
                 success:
                     function (response) {
-
-                        console.log(response);
                         var emp = [];
                         for (var prop in response) {
                             var item = response[prop];
@@ -114,17 +112,12 @@
                                 "drilldown": item.name
                             }
                             emp.push(item.name);
-                            // emp.push(data1);
                         }
-                        console.log('emp ', emp);
                         var emp1 = [];
                         for (var prop in response) {
                             var item = response[prop];
                             emp1.push(item.y);
                         }
-
-
-
                         var chart = Highcharts.chart('container2', {
                             chart: {
                                 type: 'pie',
@@ -137,7 +130,6 @@
                                 text: 'Department Wise Partial Available Resource Status'
                             },
                             subtitle: {
-                                // text: '3D donut in Highcharts'
                             },
                             plotOptions: {
                                 pie: {
@@ -146,7 +138,7 @@
                                 }
                             },
                             series: [{
-                                name: 'Leaves',
+                                name: 'Available',
                                 data: response,
                             }]
                         });
@@ -156,16 +148,14 @@
 
     }
 
-    function ColumnChart3D4() {
+    function FullAvailable() {
         $.ajax(
             {
                 type: 'GET',
                 dataType: 'JSON',
-                url: '/Admin/TopLeaveDept1',
+                url: '/Admin/FullAvailable',
                 success:
                     function (response) {
-
-                        console.log(response);
                         var emp = [];
                         for (var prop in response) {
                             var item = response[prop];
@@ -175,17 +165,12 @@
                                 "drilldown": item.name
                             }
                             emp.push(item.name);
-                            // emp.push(data1);
                         }
-                        console.log('emp ', emp);
                         var emp1 = [];
                         for (var prop in response) {
                             var item = response[prop];
                             emp1.push(item.y);
                         }
-
-
-
                         var chart = Highcharts.chart('container', {
                             chart: {
                                 type: 'pie',
@@ -198,7 +183,6 @@
                                 text: 'Department Wise Fully Available Resource Status'
                             },
                             subtitle: {
-                                // text: '3D donut in Highcharts'
                             },
                             plotOptions: {
                                 pie: {
@@ -207,7 +191,7 @@
                                 }
                             },
                             series: [{
-                                name: 'Leaves',
+                                name: 'Available',
                                 data: response,
                             }]
                         });
@@ -217,16 +201,14 @@
 
     }
 
-    function ColumnChart3D5() {
+    function OpenPosition() {
         $.ajax(
             {
                 type: 'GET',
                 dataType: 'JSON',
-                url: '/Admin/TopLeaveDept2',
+                url: '/Admin/OpenPosition',
                 success:
                     function (response) {
-
-                        console.log(response);
                         var emp = [];
                         for (var prop in response) {
                             var item = response[prop];
@@ -236,17 +218,12 @@
                                 "drilldown": item.name
                             }
                             emp.push(item.name);
-                            // emp.push(data1);
                         }
-                        console.log('emp ', emp);
                         var emp1 = [];
                         for (var prop in response) {
                             var item = response[prop];
                             emp1.push(item.y);
                         }
-
-
-
                         var chart = Highcharts.chart('container3', {
                             chart: {
                                 type: 'pie',
@@ -259,7 +236,6 @@
                                 text: 'Department Wise Open positions Status'
                             },
                             subtitle: {
-                                // text: '3D donut in Highcharts'
                             },
                             plotOptions: {
                                 pie: {
@@ -268,7 +244,7 @@
                                 }
                             },
                             series: [{
-                                name: 'Leaves',
+                                name: 'Open',
                                 data: response,
                             }]
                         });
@@ -278,16 +254,14 @@
 
     }
 
-    function ColumnChart3D6() {
+    function ClosedPosition() {
         $.ajax(
             {
                 type: 'GET',
                 dataType: 'JSON',
-                url: '/Admin/TopLeaveDept3',
+                url: '/Admin/ClosedPosition',
                 success:
                     function (response) {
-
-                        console.log(response);
                         var emp = [];
                         for (var prop in response) {
                             var item = response[prop];
@@ -297,17 +271,12 @@
                                 "drilldown": item.name
                             }
                             emp.push(item.name);
-                            // emp.push(data1);
                         }
-                        console.log('emp ', emp);
                         var emp1 = [];
                         for (var prop in response) {
                             var item = response[prop];
                             emp1.push(item.y);
                         }
-
-
-
                         var chart = Highcharts.chart('container4', {
                             chart: {
                                 type: 'pie',
@@ -320,7 +289,6 @@
                                 text: 'Department Wise Closed Positions Status'
                             },
                             subtitle: {
-                                // text: '3D donut in Highcharts'
                             },
                             plotOptions: {
                                 pie: {
@@ -329,7 +297,7 @@
                                 }
                             },
                             series: [{
-                                name: 'Leaves',
+                                name: 'Closed',
                                 data: response,
                             }]
                         });

@@ -97,7 +97,7 @@
         };
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("SaveBalanceLeaveChangesBasedID", "PositionHRInfo")',
+            url: '@Url.Action("SaveHRChangesBasedID", "PositionHRInfo")',
             data: { updateLeaveData: model },
             success: function (response) {
                     location.reload();

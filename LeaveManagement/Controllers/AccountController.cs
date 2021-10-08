@@ -11,7 +11,7 @@ namespace LeaveManagement.Controllers
 {
     public class AccountController : Controller
     {
-        private Recovered_hrmsnewContext _context;
+        private readonly Recovered_hrmsnewContext _context;
         public AccountController(Recovered_hrmsnewContext context)
         {
             _context = context;
@@ -28,13 +28,12 @@ namespace LeaveManagement.Controllers
         {
             return View();
         }
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginViewModel model,
-        string returnUrl)
+        public IActionResult Login(LoginViewModel model)
         {
             bool isUservalid = false;
             EmployeeViewModel user = _context.Employee.Where(usr => usr.EmpId == model.UserName &&
@@ -56,10 +55,12 @@ namespace LeaveManagement.Controllers
             }
             if (ModelState.IsValid && isUservalid)
             {
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, user.EmpId));
-                claims.Add(new Claim("FullName", user.FullName));
-                claims.Add(new Claim("EmpId", user.Id.ToString()));
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.EmpId),
+                    new Claim("FullName", user.FullName),
+                    new Claim("EmpId", user.Id.ToString())
+                };
                 if (user != null && user.Roles.Count > 0)
                 {
                     foreach (var role in user.Roles)
@@ -73,8 +74,10 @@ namespace LeaveManagement.Controllers
                 }
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
-                var props = new AuthenticationProperties();
-                props.IsPersistent = model.RememberMe;
+                var props = new AuthenticationProperties
+                {
+                    IsPersistent = model.RememberMe
+                };
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal, props).Wait();
                 var roleData = user.Roles.Where(x => x.Role == "HR" || x.Role == "Admin").FirstOrDefault();
                 if (roleData != null)
@@ -96,10 +99,8 @@ namespace LeaveManagement.Controllers
         }
         public IActionResult Logout()
         {
-            HttpContext.SignOutAsync(
-        CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
-
     }
 }

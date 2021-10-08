@@ -1,6 +1,7 @@
 ﻿using LeaveManagement.BAL;
 using LeaveManagement.Database;
 using LeaveManagement.Models;
+using LeaveManagement.SP;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,19 @@ namespace LeaveManagement.Controllers
     //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private Recovered_hrmsnewContext _context;
-        private DashboardViewModel model;
-        private Logging _logging;
+        private readonly DashboardViewModel model;
 
-        public AdminController(Recovered_hrmsnewContext context)
+        public AdminController(Recovered_hrmsnewContext context, StoredProcedure spcontext)
         {
-            _context = context;
-            _logging = new Logging();
-            model = new DashboardViewModel(context);
+            model = new DashboardViewModel(context, spcontext);
         }
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> TopLeaveDept()
+        public async Task<IActionResult> PartialAvailable()
         {
-            var leaves = await model.TotalDeptLeaves();
+            var leaves = await model.PartialAvailable();
             List<GraphModel> graph = leaves.Select(x => new GraphModel
             {
                 y = x.ActualCount,
@@ -35,9 +32,9 @@ namespace LeaveManagement.Controllers
             }).ToList();
             return Json(graph);
         }
-        public async Task<IActionResult> TopLeaveDept1()
+        public async Task<IActionResult> FullAvailable()
         {
-            var leaves = await model.TotalDeptLeaves1();
+            var leaves = await model.FullAvailable();
             List<GraphModel> graph = leaves.Select(x => new GraphModel
             {
                 y = x.ActualCount,
@@ -45,9 +42,9 @@ namespace LeaveManagement.Controllers
             }).ToList();
             return Json(graph);
         }
-        public async Task<IActionResult> TopLeaveDept2()
+        public async Task<IActionResult> OpenPosition()
         {
-            var leaves = await model.TotalDeptLeaves2();
+            var leaves = await model.OpenPosition();
             List<GraphModel> graph = leaves.Select(x => new GraphModel
             {
                 y = x.ActualCount,
@@ -55,9 +52,9 @@ namespace LeaveManagement.Controllers
             }).ToList();
             return Json(graph);
         }
-        public async Task<IActionResult> TopLeaveDept3()
+        public async Task<IActionResult> ClosedPosition()
         {
-            var leaves = await model.TotalDeptLeaves3();
+            var leaves = await model.ClosedPosition();
             List<GraphModel> graph = leaves.Select(x => new GraphModel
             {
                 y = x.ActualCount,
