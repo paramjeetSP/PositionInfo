@@ -2,9 +2,8 @@
 {
     public enum Priority
     {
-        High,
-        Medium,
-        Low
+        Low,
+        High
     }
 
     public enum Status

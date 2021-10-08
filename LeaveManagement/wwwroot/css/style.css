@@ -140,6 +140,15 @@ body {
     width: 100%;
 }
     .timelog--parent main[role="main-wrapper"] .mid--box {
+        padding: calc(1 / 1 * 2%) calc(1 / 1 * 1%);
+        margin-top: 15px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+  /*  .timelog--parent main[role="main-wrapper"] .mid--box {
         padding: calc(1 / 1 * 4%) calc(1 / 1 * 1%);
         margin: calc(1 / 1 * 3%) 0;
         background: #fff;
@@ -147,7 +156,7 @@ body {
         box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
         position: relative;
         overflow: hidden;
-    }
+    }*/
 .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] {
     z-index: 1;
     position: relative;
@@ -218,8 +227,11 @@ span.reason {
     text-align: center;
 }
 /*--------------------Dashbord--------------------*/
- #mast-head {
+/*
+#mast-head {
     padding: calc(1 / 1 * 1%) 0;
+} */
+    #mast-head {
     background: #00a0ff;
     position: sticky;
     top: 0px;
@@ -296,7 +308,7 @@ div.dataTables_wrapper div.dataTables_info {
 /*SIDE BAR AREA CSS STARST*/
 
 .dashboardHolder .side--bar {
-    width: 250px;
+    width: 175px;
     background: #fff;
     box-shadow: 0 0 10px 0 rgba(33, 33, 33, .2);
     position: sticky;
@@ -314,26 +326,26 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .dashboardHolder .side--bar ul li a i {
-    margin-right: 18px;
+    margin-right: 10px;
     color: #222;
 }
 
-.dashboardHolder .side--bar ul li a {
-    color: rgba(0, 0, 0, 0.9);
-    padding: 18px 28px;
-    display: block;
-    font-size: 15px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    text-decoration: none;
-}
+    .dashboardHolder .side--bar ul li a {
+        color: rgba(0, 0, 0, 0.9);
+        padding: 18px 15px;
+        display: block;
+        font-size: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        text-decoration: none;
+    }
 
 .timelog--parent {
     position: relative;
     flex: 1;
-    margin-left: 240px;
+    margin-left: 175px;
     transition: all 0.3s;
 }
 .timelog--parent main[role="main-wrapper"] .mid--box:after, .timelog--parent main[role="main-wrapper"] .mid--box:before {
@@ -361,7 +373,7 @@ div.dataTables_wrapper div.dataTables_info {
 
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .d--box {
         box-shadow: 0 0 22px rgba(0, 0, 0, 0.1);
-        margin-bottom: calc(1 / 1 * 10%);
+        margin-bottom: calc(1 / 1 * 5%);
         text-align: center;
         border-radius: 6px;
         max-width: 100%;
@@ -370,6 +382,7 @@ div.dataTables_wrapper div.dataTables_info {
         background: #fff;
         /*min-height: 500px;*/
         padding: calc(1 / 1 * 10%);
+        border: 1px solid #e3e3e3;
     }
 
 .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .d--box h2 {
@@ -392,13 +405,13 @@ div.dataTables_wrapper div.dataTables_info {
 
 .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .d--box .img img {
     width: 80px;
-}
+}/*
 a.menu {
    margin: 12px;
-}
+} */
 
 .timelog--parent.menu-collapse {
-    margin-left: 61px;
+    margin-left: 70px;
 }
 .menu img {
     max-width: 24px;
@@ -538,17 +551,17 @@ a.menu {
     justify-content: flex-end;
 }
 .side--bar.menu-collapse {
-    width: 70px;
+    width: 55px;
 }
 #emp-list_wrapper spam {
     display: block;
     margin-top: 7px;
 }
 #admin-dashboard .d--box {
-    min-height: 582px;
+    min-height: 510px;
 }
 .timelog--parent.menu-collapse #admin-dashboard .d--box {
-    min-height: 600px;
+    min-height: 530px;
 }
 .leave-status-tabular {
     width: 100%;

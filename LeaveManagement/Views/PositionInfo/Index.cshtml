@@ -5,6 +5,7 @@
 <style>
     #emp-list_wrapper .table tr th {
         white-space: nowrap;
+        text-align: center;
     }
 
 
@@ -15,14 +16,16 @@
     }
 
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .btn {
-        padding: 2px 5px;
-        margin: 0;
+        padding: 2px 8px;
         border-radius: 3px;
+        margin: 0;
+        box-shadow: 0 0 10px rgb(86 185 244 / 40%);
     }
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
         padding: 3px 7px;
         height: 30px;
     }
+    
 </style>
 
 <main id="EmployeeList" role="main-wrapper">
@@ -98,13 +101,13 @@
                                             @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
                                         </td>
                                         <td>
-                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)">View</button>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)"><i class="fa fa-eye view_eye"></i></button>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.CurrentProject)
                                         </td>
                                         <td>
-                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)">Edit</button>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)"><i class="fa fa-edit"></i></button>
                                         </td>
                                     </tr>
                                 }

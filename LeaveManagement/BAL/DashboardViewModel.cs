@@ -164,6 +164,7 @@ namespace LeaveManagement.BAL
                         item.Experience = Math.Round(oldexperienceindays, 1).ToString();
                     }
                 }
+                empList = empList.OrderByDescending(x => x.MarkToBench).ThenByDescending(x => x.PartialAvailable).ToList();
                 return empList;
             }
             catch (Exception ex)
@@ -176,7 +177,7 @@ namespace LeaveManagement.BAL
         {
             try
             {
-                List<HrpositionInfo> empList = _context.HrpositionInfo.ToList();
+                List<HrpositionInfo> empList = _context.HrpositionInfo.OrderByDescending(x => x.Status).ThenBy(y => y.Priority).ToList();
                 return empList;
             }
             catch (Exception ex)

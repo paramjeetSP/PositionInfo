@@ -43,6 +43,7 @@ namespace LeaveManagement.Controllers
                 Id = x.Id,
                 EmpId = x.EmpId,
                 FullName = x.FullName,
+                Dept = _context.TblEDepartment.Where(y => y.Id == x.FkDepartment).Select(x => x.DeptName).FirstOrDefault(),
                 Roles = _context.EmployeeRole.Join(_context.TblERole, a => a.FkRole, b => b.Id, (a, b) => new { a, b }).Where(i => i.a.FkEmployee == x.Id).Select(z => new Roles
                 {
                     Id = z.b.Id,
@@ -59,7 +60,8 @@ namespace LeaveManagement.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.EmpId),
                     new Claim("FullName", user.FullName),
-                    new Claim("EmpId", user.Id.ToString())
+                    new Claim("EmpId", user.Id.ToString()),
+                    new Claim("Dept", user.Dept.ToString())
                 };
                 if (user != null && user.Roles.Count > 0)
                 {
