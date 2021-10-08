@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LeaveManagement.BAL
@@ -239,6 +240,14 @@ namespace LeaveManagement.BAL
                 return null;
             }
 
+        }
+        private string GetPlainTextFromHtml(string htmlString)
+        {
+            string htmlTagPattern = "<.*?>";
+            htmlString = Regex.Replace(htmlString, htmlTagPattern, string.Empty);
+            htmlString = Regex.Replace(htmlString, @"^\s+$[\r\n]*", "");
+            htmlString = htmlString.Replace(" ", string.Empty);
+            return htmlString;
         }
     }
 }

@@ -80,11 +80,15 @@
         </div>
 </div>
 <script>
+    $(document).ready(function () {
+        CKEDITOR.replace('Skills');
+    });
     function SaveEditData() {
+        var desc = CKEDITOR.instances['Skills'].getData();
         var model = {
             Id: $('#LeaveRowID').val(),
             Title: $('#Title').val(),
-            Skills: $('#Skills').val(),
+            Skills: desc,
             Department: $('#Department').val(),
             NoOfPosition: $('#NoOfPosition').val(),
             Priority: $("#Priority option:selected").text(),

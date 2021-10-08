@@ -50,12 +50,16 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        CKEDITOR.replace('Skillset');
+    });
     function SaveEditData() {
+        var desc = CKEDITOR.instances['Skillset'].getData();
         var model = {
             OnBench: $('#OnBench').is(":checked"),
             PartialAvailable: $('#PartialAvailable').is(":checked"),
             ExpPartialDate: $('#ExpPartialDate').val(),
-            Skillset: $('#Skillset').val(),
+            Skillset: desc,
             CurrentProjName: $('#CurrentProjName').val(),
             ID: $('#LeaveRowID').val(),
         };
