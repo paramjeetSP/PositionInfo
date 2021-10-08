@@ -105,7 +105,6 @@
                                         </td>
                                         <td>
                                             <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)">Edit</button>
-                                            @*<a asp-action="EmployeeDetails" asp-route-id="@item.ID">Details</a>*@
                                         </td>
                                     </tr>
                                 }
@@ -127,14 +126,11 @@
             type: 'POST',
             url: '@Url.Action("EditEmpResourse", "PositionInfo")',
             data: { ID: LeaveRowID },
-          //  contentType: "application/json; charset=utf-8",
             success: function (response) {
-                debugger
                 $('#BalanceLeaveModal').html(response);
                 $('#BalanceLeaveModal').modal('show');
             },
             error: function (response) {
-                //alert('some error has occured !!');
             }
         });
     }
@@ -150,7 +146,6 @@
                 }
             ]
         });
-        //$('#emp-list').DataTable();
     });
 </script>
 

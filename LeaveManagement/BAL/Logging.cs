@@ -1,9 +1,6 @@
 ﻿using LeaveManagement.Database;
 using LeaveManagement.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LeaveManagement.BAL
 {
@@ -24,7 +21,7 @@ namespace LeaveManagement.BAL
             tbl.ControllerName = controllerName;
             tbl.Platform = Platform;
             tbl.LogTime = DateTime.Now;
-            if(ex.InnerException != null)
+            if (ex.InnerException != null)
             {
                 tbl.InnerException = ex.InnerException.ToString();
             }
@@ -36,10 +33,6 @@ namespace LeaveManagement.BAL
             tbl.ExceptionMessage = ex.Message.ToString();
             _context.TblExceptionLogger.Add(tbl);
             _context.SaveChanges();
-
-            //_context.TblExceptionLogger
-
-            //throw new NotImplementedException();
         }
     }
 }

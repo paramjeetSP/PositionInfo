@@ -439,6 +439,10 @@ a.menu {
 .mid--box table th, .mid--box table td {
     border: 1px solid #dee2e6;
 }
+.table > thead > tr > th {
+    border-bottom: none;
+    border-top: 1px solid #ddd !important;
+}
 #emp-list_wrapper .table td {
     width: 12%;
     text-align: center;

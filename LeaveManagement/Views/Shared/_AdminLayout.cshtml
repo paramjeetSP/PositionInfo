@@ -1,19 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Softprodigy-TimeLog</title>
-
+    <title>Softprodigy-Resource</title>
     <!-- Bootstrap core CSS -->
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -25,12 +20,9 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        @*<script src="~/vendor/jquery/jquery.min.js"></script>*@
         <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
         <!-- Plugin JavaScript -->
         <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-
         <!-- Custom JavaScript for this theme -->
         <script src="~/js/scrolling-nav.js"></script>
         @*<script src="https://code.jquery.com/jquery-3.3.1.js"></script>*@
@@ -56,13 +48,6 @@
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
     </environment>
     <link rel="icon" href="~/images/fav-SPIMAGE.png" sizes="16x16 32x32" type="image/png">
-    <style>
-        /*.active {
-            color: #fff;
-            background-color: #212529;
-            border-color: #32383e;
-        }*/
-    </style>
 </head>
 <body id="page-top">
     <!-- Navigation -->
@@ -132,7 +117,6 @@
         </div>
         <div class="timelog--parent">
             @RenderBody()
-
             <footer id="footer-area" class="d-flex justify-content-center">
                 © 2010-2019 SoftProdigy All rights reserved.
             </footer>
@@ -144,12 +128,6 @@
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
     @* loader html ends *@
-
-    <!-- Bootstrap core JavaScript -->
-    @*<script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>*@
-
     <!-- Custom JavaScript for this theme -->
     <script>
         jQuery('.menu').click(function () {
@@ -160,27 +138,11 @@
             $('.dropdown .dropdown-menu').toggleClass('show');
         });
 
-        //$('.side--bar').on('onload', 'li', function () {
-
-        //    $('.side--bar li.active').removeClass('active');
-        //    $(this).addClass('active');
-        //});
         $('.side--bar li').click(function () {
             $('.side--bar .active').removeClass('active');
             $(this).addClass('active');
 
         });
-        function sendCodeGeneratorEmail() {
-            $.ajax({
-                url: '/RandomCodeGenerator/GenerateCode/658',
-                success: (res) => {
-                    console.log(res);
-                }
-            });
-        }
     </script>
-
 </body>
-
-
 </html>

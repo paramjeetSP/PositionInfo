@@ -111,14 +111,12 @@
             type: 'POST',
             url: '@Url.Action("EditEmpResourse", "PositionHRInfo")',
             data: { ID: LeaveRowID },
-          //  contentType: "application/json; charset=utf-8",
             success: function (response) {
                 debugger
                 $('#BalanceLeaveModal').html(response);
                 $('#BalanceLeaveModal').modal('show');
             },
             error: function (response) {
-                //alert('some error has occured !!');
             }
         });
     }
@@ -134,7 +132,6 @@
                 }
             ]
         });
-        //$('#emp-list').DataTable();
     });
 </script>
 <style>

@@ -5,8 +5,63 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helper\**" />
+    <Compile Remove="Views\Appraisal\**" />
+    <Compile Remove="Views\Dashboard\**" />
+    <Compile Remove="Views\EmployeeDailyLog\**" />
+    <Compile Remove="Views\Home\**" />
+    <Compile Remove="Views\Leaves\**" />
+    <Compile Remove="Views\RandomCodeGenerator\**" />
+    <Content Remove="Helper\**" />
+    <Content Remove="Views\Appraisal\**" />
+    <Content Remove="Views\Dashboard\**" />
+    <Content Remove="Views\EmployeeDailyLog\**" />
+    <Content Remove="Views\Home\**" />
+    <Content Remove="Views\Leaves\**" />
+    <Content Remove="Views\RandomCodeGenerator\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <EmbeddedResource Remove="Views\Appraisal\**" />
+    <EmbeddedResource Remove="Views\Dashboard\**" />
+    <EmbeddedResource Remove="Views\EmployeeDailyLog\**" />
+    <EmbeddedResource Remove="Views\Home\**" />
+    <EmbeddedResource Remove="Views\Leaves\**" />
+    <EmbeddedResource Remove="Views\RandomCodeGenerator\**" />
+    <None Remove="Helper\**" />
+    <None Remove="Views\Appraisal\**" />
+    <None Remove="Views\Dashboard\**" />
+    <None Remove="Views\EmployeeDailyLog\**" />
+    <None Remove="Views\Home\**" />
+    <None Remove="Views\Leaves\**" />
+    <None Remove="Views\RandomCodeGenerator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\APIAppraisalController.cs" />
     <Compile Remove="Controllers\APIAppraisalController_OLD.cs" />
+    <Compile Remove="Controllers\AppraisalController.cs" />
+    <Compile Remove="Controllers\DashboardApiController.cs" />
+    <Compile Remove="Controllers\DashboardController.cs" />
+    <Compile Remove="Controllers\EmployeeController.cs" />
+    <Compile Remove="Controllers\EmployeeDailyLogController.cs" />
+    <Compile Remove="Controllers\HomeController.cs" />
+    <Compile Remove="Controllers\LeavesController.cs" />
+    <Compile Remove="Controllers\loginController.cs" />
+    <Compile Remove="Controllers\RandomCodeGeneratorController.cs" />
+    <Compile Remove="Controllers\TokenController.cs" />
+    <Compile Remove="Models\ApplyLeaveViewModel.cs" />
+    <Compile Remove="Models\AppraisalVeiwModel.cs" />
     <Compile Remove="Models\AppraisalVeiwModel_OLD.cs" />
+    <Compile Remove="Models\User.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_AuthCodeTable.cshtml" />
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+    <Content Remove="Views\Shared\_myLayout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

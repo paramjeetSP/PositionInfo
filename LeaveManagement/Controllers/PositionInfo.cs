@@ -2,24 +2,16 @@
 using LeaveManagement.Database;
 using LeaveManagement.Models.SpModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LeaveManagement.Controllers
 {
     public class PositionInfo : Controller
     {
-        private Recovered_hrmsnewContext _context;
         private DashboardViewModel model;
-        private Logging _logging;
 
         public PositionInfo(Recovered_hrmsnewContext context)
         {
-            _context = context;
-            _logging = new Logging();
             model = new DashboardViewModel(context);
         }
         public IActionResult Index()
