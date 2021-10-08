@@ -20,10 +20,13 @@
 </div>
 <script>
     $(document).ready(function () {
-        CKEDITOR.replace('Skillset', { toolbar: [] });
+        CKEDITOR.replace('Skillset');
     });
 </script>
 <style>
+    span#cke_1_top {
+        display: none;
+    }
     input#ExpPartialDate {
         display: block;
         width: 100%;

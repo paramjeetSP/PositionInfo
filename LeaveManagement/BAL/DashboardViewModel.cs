@@ -118,7 +118,7 @@ namespace LeaveManagement.BAL
                 {
                     HrpositionInfo employeeAvailability = new();
                     employeeAvailability.Title = updateLeaveData.Title;
-                    employeeAvailability.CreatedOn = DateTime.Now;
+                    employeeAvailability.CreatedOn = DateTime.Now.Date;
                     employeeAvailability.Skills = updateLeaveData.Skills;
                     employeeAvailability.Department = updateLeaveData.Department;
                     employeeAvailability.NoOfPosition = updateLeaveData.NoOfPosition;
@@ -240,14 +240,6 @@ namespace LeaveManagement.BAL
                 return null;
             }
 
-        }
-        private string GetPlainTextFromHtml(string htmlString)
-        {
-            string htmlTagPattern = "<.*?>";
-            htmlString = Regex.Replace(htmlString, htmlTagPattern, string.Empty);
-            htmlString = Regex.Replace(htmlString, @"^\s+$[\r\n]*", "");
-            htmlString = htmlString.Replace(" ", string.Empty);
-            return htmlString;
         }
     }
 }

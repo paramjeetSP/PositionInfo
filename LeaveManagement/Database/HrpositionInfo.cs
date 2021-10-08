@@ -8,6 +8,7 @@ namespace LeaveManagement.Database
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? CreatedOn { get; set; }
         public string Skills { get; set; }
         public string Department { get; set; }
