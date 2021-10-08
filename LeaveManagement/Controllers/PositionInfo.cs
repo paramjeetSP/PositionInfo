@@ -30,5 +30,10 @@ namespace LeaveManagement.Controllers
             bool editLeaves = await model.UpdateEmpResData(updateLeaveData);
             return Json(new { success = editLeaves });
         }
+        public async Task<IActionResult> ViewEmpskills(int ID)
+        {
+            var editLeaves = await model.EditEmpRes(ID);
+            return PartialView("_SkillsHRInfo", editLeaves);
+        }
     }
 }

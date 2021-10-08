@@ -98,7 +98,7 @@
                                             @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Skillset)
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)">View</button>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.CurrentProject)
@@ -118,6 +118,8 @@
     </div>
     <div class="modal fade" id="BalanceLeaveModal" role="dialog">
     </div>
+    <div class="modal fade" id="BalanceLeaveModal12" role="dialog">
+    </div>
 </main>
 
 <script>
@@ -129,6 +131,20 @@
             success: function (response) {
                 $('#BalanceLeaveModal').html(response);
                 $('#BalanceLeaveModal').modal('show');
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function initateView(LeaveRowID) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ViewEmpskills", "PositionInfo")',
+            data: { ID: LeaveRowID },
+            success: function (response) {
+                $('#BalanceLeaveModal12').html(response);
+                $('#BalanceLeaveModal12').modal('show');
             },
             error: function (response) {
             }

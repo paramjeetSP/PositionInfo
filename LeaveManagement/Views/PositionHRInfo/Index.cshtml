@@ -54,44 +54,44 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Title)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Skills)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Department)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NoOfPosition)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Priority)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Budget)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ExpectedDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Experience)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RequestedBy)
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)">Edit</button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                                        </td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.Id" onclick="initateView(@item.Id)">View</button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Department)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NoOfPosition)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Priority)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Budget)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExpectedDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Experience)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RequestedBy)
+                                        </td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)">Edit</button>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -102,6 +102,8 @@
         </div>
     </div>
     <div class="modal fade" id="BalanceLeaveModal1" role="dialog">
+    </div>
+    <div class="modal fade" id="BalanceLeaveModal11" role="dialog">
     </div>
 </main>
 
@@ -114,6 +116,20 @@
             success: function (response) {
                 $('#BalanceLeaveModal1').html(response);
                 $('#BalanceLeaveModal1').modal('show');
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function initateView(LeaveRowID) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ViewEmpskills", "PositionHRInfo")',
+            data: { ID: LeaveRowID },
+            success: function (response) {
+                $('#BalanceLeaveModal11').html(response);
+                $('#BalanceLeaveModal11').modal('show');
             },
             error: function (response) {
             }
