@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DB\**" />
     <Compile Remove="Helper\**" />
     <Compile Remove="Views\Appraisal\**" />
     <Compile Remove="Views\Dashboard\**" />
@@ -12,6 +13,7 @@
     <Compile Remove="Views\Home\**" />
     <Compile Remove="Views\Leaves\**" />
     <Compile Remove="Views\RandomCodeGenerator\**" />
+    <Content Remove="DB\**" />
     <Content Remove="Helper\**" />
     <Content Remove="Views\Appraisal\**" />
     <Content Remove="Views\Dashboard\**" />
@@ -19,6 +21,7 @@
     <Content Remove="Views\Home\**" />
     <Content Remove="Views\Leaves\**" />
     <Content Remove="Views\RandomCodeGenerator\**" />
+    <EmbeddedResource Remove="DB\**" />
     <EmbeddedResource Remove="Helper\**" />
     <EmbeddedResource Remove="Views\Appraisal\**" />
     <EmbeddedResource Remove="Views\Dashboard\**" />
@@ -26,6 +29,7 @@
     <EmbeddedResource Remove="Views\Home\**" />
     <EmbeddedResource Remove="Views\Leaves\**" />
     <EmbeddedResource Remove="Views\RandomCodeGenerator\**" />
+    <None Remove="DB\**" />
     <None Remove="Helper\**" />
     <None Remove="Views\Appraisal\**" />
     <None Remove="Views\Dashboard\**" />
