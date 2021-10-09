@@ -19,6 +19,7 @@ namespace LeaveManagement.Models
         public string EmpId { get; set; }
         public string FullName { get; set; }
         public string Dept { get; set; }
+        public string Grade { get; set; }
         public List<Roles> Roles { get; set; }
     }
     public class Roles

@@ -2,18 +2,21 @@
 using LeaveManagement.Database;
 using LeaveManagement.Models.SpModels;
 using LeaveManagement.SP;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace LeaveManagement.Controllers
 {
+    [Authorize]
     public class PositionInfo : Controller
     {
         private readonly DashboardViewModel model;
 
-        public PositionInfo(Recovered_hrmsnewContext context, StoredProcedure spcontext)
+        public PositionInfo(Recovered_hrmsnewContext context, StoredProcedure spcontext, IHttpContextAccessor httpContextAccessor)
         {
-            model = new DashboardViewModel(context, spcontext);
+            model = new DashboardViewModel(context, spcontext, httpContextAccessor);
         }
         public IActionResult Index()
         {

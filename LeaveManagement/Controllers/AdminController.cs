@@ -2,6 +2,8 @@
 using LeaveManagement.Database;
 using LeaveManagement.Models;
 using LeaveManagement.SP;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace LeaveManagement.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly DashboardViewModel model;
 
-        public AdminController(Recovered_hrmsnewContext context, StoredProcedure spcontext)
+        public AdminController(Recovered_hrmsnewContext context, StoredProcedure spcontext, IHttpContextAccessor httpContextAccessor)
         {
-            model = new DashboardViewModel(context, spcontext);
+            model = new DashboardViewModel(context, spcontext, httpContextAccessor);
         }
         public IActionResult Index()
         {

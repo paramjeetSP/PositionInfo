@@ -99,27 +99,34 @@
             <ul>
                 @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    @*@if (HttpContextAccessor.HttpContext.User.IsInRole("Admin"))
-            {*@
-                    <li id="Admin_Dashboard">
-                        <a asp-area="" asp-controller="Admin" asp-action="Index">
-                            <i class="fa fa-dashboard"></i>
-                            <span class="title">Admin Dashboard</span>
-                        </a>
-                    </li>
-                    <li id="Position_form">
-                        <a asp-area="" asp-controller="PositionInfo" asp-action="Index">
-                            <i class="fa fa-list-alt"></i>
-                            <span class="title">Employee List</span>
-                        </a>
-                    </li>
-                    <li id="PositionHR_form">
-                        <a asp-area="" asp-controller="PositionHRInfo" asp-action="Index">
-                            <i class="fa fa-clock-o"></i>
-                            <span class="title">Position Info</span>
-                        </a>
-                    </li>
-                    //}
+                    @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
+                       (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")) ||
+                       (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BD") ||
+                       (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BAG"))
+                    {
+                        <li id="Admin_Dashboard">
+                            <a asp-area="" asp-controller="Admin" asp-action="Index">
+                                <i class="fa fa-dashboard"></i>
+                                <span class="title">Admin Dashboard</span>
+                            </a>
+                        </li>
+                        <li id="Position_form">
+                            <a asp-area="" asp-controller="PositionInfo" asp-action="Index">
+                                <i class="fa fa-list-alt"></i>
+                                <span class="title">Employee List</span>
+                            </a>
+                        </li>
+                    }
+                    @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
+                      (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")))
+                    {
+                        <li id="PositionHR_form">
+                            <a asp-area="" asp-controller="PositionHRInfo" asp-action="Index">
+                                <i class="fa fa-clock-o"></i>
+                                <span class="title">Position Info</span>
+                            </a>
+                        </li>
+                    }
                 }
             </ul>
         </div>

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<LeaveManagement.Models.SpModels.SingleEmployee>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -21,11 +22,11 @@
         margin: 0;
         box-shadow: 0 0 10px rgb(86 185 244 / 40%);
     }
+
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
         padding: 3px 7px;
         height: 30px;
     }
-    
 </style>
 
 <main id="EmployeeList" role="main-wrapper">
@@ -75,41 +76,44 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FullName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.OfficialEmail)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Mobile)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Department)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Experience)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MarkToBench)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PartialAvailable)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
-                                        </td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)"><i class="fa fa-eye view_eye"></i></button>
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CurrentProject)
-                                        </td>
-                                        <td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OfficialEmail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mobile)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Department)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Experience)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MarkToBench)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PartialAvailable)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)"><i class="fa fa-eye view_eye"></i></button>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrentProject)
+                                    </td>
+                                    <td>
+                                        @if(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == @item.Department)
+                                        {
                                             <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)"><i class="fa fa-edit"></i></button>
-                                        </td>
-                                    </tr>
+                                        }
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

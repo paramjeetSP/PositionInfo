@@ -44,6 +44,7 @@ namespace LeaveManagement.Controllers
                 EmpId = x.EmpId,
                 FullName = x.FullName,
                 Dept = _context.TblEDepartment.Where(y => y.Id == x.FkDepartment).Select(x => x.DeptName).FirstOrDefault(),
+                Grade = _context.TblEGrade.Where(y => y.Id == x.FkEmpGrade).Select(x => x.Description).FirstOrDefault(),
                 Roles = _context.EmployeeRole.Join(_context.TblERole, a => a.FkRole, b => b.Id, (a, b) => new { a, b }).Where(i => i.a.FkEmployee == x.Id).Select(z => new Roles
                 {
                     Id = z.b.Id,
@@ -61,7 +62,8 @@ namespace LeaveManagement.Controllers
                     new Claim(ClaimTypes.Name, user.EmpId),
                     new Claim("FullName", user.FullName),
                     new Claim("EmpId", user.Id.ToString()),
-                    new Claim("Dept", user.Dept.ToString())
+                    new Claim("Dept", user.Dept.ToString()),
+                    new Claim("Grade", user.Grade.ToString())
                 };
                 if (user != null && user.Roles.Count > 0)
                 {
@@ -82,13 +84,13 @@ namespace LeaveManagement.Controllers
                 };
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal, props).Wait();
                 var roleData = user.Roles.Where(x => x.Role == "HR" || x.Role == "Admin").FirstOrDefault();
-                if (roleData != null)
+                if (roleData != null || user.Dept == "BD" || user.Dept == "BAG" || user.Grade.StartsWith("B"))
                 {
                     return RedirectToAction("Index", "Admin");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("AccessDenied", "Account");
                 }
             }
             else

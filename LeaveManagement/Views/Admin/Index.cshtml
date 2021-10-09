@@ -1,4 +1,5 @@
 ﻿@model LeaveManagement.Models.SpModels.DepartmentList
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Index";
@@ -54,26 +55,36 @@
         <div class="row justify-content-center">
             <div class="col-md-12 parent">
                 <div class="mid--box row justify-content-center">
-                    <div class="col-sm-6">
-                        <div class="d--box">
-                            <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                    @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
+                        (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BD") ||
+                        (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BAG") ||
+                        (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")))
+                    {
+                        <div class="col-sm-6">
+                            <div class="d--box">
+                                <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="d--box">
-                            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <div class="col-sm-6">
+                            <div class="d--box">
+                                <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="d--box">
-                            <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                    }
+                    @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
+                        (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")))
+                    {
+                        <div class="col-sm-6">
+                            <div class="d--box">
+                                <div id="container3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="d--box">
-                            <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <div class="col-sm-6">
+                            <div class="d--box">
+                                <div id="container4" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

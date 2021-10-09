@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace LeaveManagement.BAL
 {
@@ -15,11 +16,13 @@ namespace LeaveManagement.BAL
         private readonly Recovered_hrmsnewContext _context;
         private readonly Logging _logging;
         private readonly StoredProcedure _spcontext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DashboardViewModel(Recovered_hrmsnewContext context, StoredProcedure spcontext)
+        public DashboardViewModel(Recovered_hrmsnewContext context, StoredProcedure spcontext, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _spcontext = spcontext;
+            _httpContextAccessor = httpContextAccessor;
             _logging = new Logging(context);
         }
         public async Task<EmployeeResDetails> EditEmpRes(int ID)
@@ -142,7 +145,19 @@ namespace LeaveManagement.BAL
         {
             try
             {
-                List<SingleEmployee> empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfile]").ToList();
+                var dept = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value;
+                var grade = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value;
+                List<SingleEmployee> empList = new List<SingleEmployee>();
+                if (_httpContextAccessor.HttpContext.User.IsInRole("Admin"))
+                {
+                    empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfile]").ToList();
+                    empList = empList.OrderByDescending(x => x.MarkToBench).ThenByDescending(x => x.PartialAvailable).ToList();
+                }
+                else
+                {
+                    empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfileFilter] @Dept,@Grade",
+                                    new SqlParameter("@Dept", dept),new SqlParameter("@Grade", grade)).ToList();
+                } 
                 DateTime dt = new();
                 foreach(var item in empList)
                 {
@@ -164,7 +179,7 @@ namespace LeaveManagement.BAL
                         item.Experience = Math.Round(oldexperienceindays, 1).ToString();
                     }
                 }
-                empList = empList.OrderByDescending(x => x.MarkToBench).ThenByDescending(x => x.PartialAvailable).ToList();
+                
                 return empList;
             }
             catch (Exception ex)
