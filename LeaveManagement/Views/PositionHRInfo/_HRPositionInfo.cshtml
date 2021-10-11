@@ -6,7 +6,7 @@
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" onclick="javascript:window.location.reload()">&times;</button>
             <h4 class="modal-title" style="position: absolute;">Add/Edit Employee Details</h4>
         </div>
         <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
@@ -74,7 +74,7 @@
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="javascript:window.location.reload()">Close</button>
                 </div>
             </div>
         </div>

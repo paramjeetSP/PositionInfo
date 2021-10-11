@@ -108,9 +108,13 @@
                                         @Html.DisplayFor(modelItem => item.CurrentProject)
                                     </td>
                                     <td>
-                                        @if(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == @item.Department)
+                                        @if (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == @item.Department)
                                         {
                                             <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)"><i class="fa fa-edit"></i></button>
+                                        }
+                                        else
+                                        {
+                                            <button data-toggle="modal" style="background: black;" data-target="#myModal" class="btn btn-default" disabled id="Edit_@item.ID"><i class="fa fa-edit"></i></button>
                                         }
                                     </td>
                                 </tr>
