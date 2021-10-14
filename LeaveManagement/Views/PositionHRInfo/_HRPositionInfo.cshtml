@@ -56,15 +56,26 @@
                         @Html.TextBoxFor(m => m.Experience, new { @class = "form-control" })
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="d--box">
-                        <label>Status</label>
-                        @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status", new { @class = "form-control" })
+                @if (@Model.Id != 0)
+                {
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Status</label>
+                            @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status", new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="col-sm-6"  style="display:none">
+                        <div class="d--box">
+                            <label>Status</label>
+                            @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
             </div>
             <div class="row">
-                
                 <div class="col-sm-12">
                     <div class="d--box">
                         <label>Skills</label>
@@ -72,12 +83,12 @@
                     </div>
                 </div>
             </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="javascript:window.location.reload()">Close</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="javascript:window.location.reload()">Close</button>
             </div>
         </div>
+    </div>
 </div>
 <script>
     $(document).ready(function () {
@@ -110,59 +121,3 @@
         });
     }
 </script>
-<style>
-    input#ExpectedDate {
-        display: block;
-        width: 100%;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
-    h4.modal-title {
-        margin-top: 0;
-        color: #fff;
-    }
-    .modal-header {
-        background: #28bdf0;
-        padding-bottom: 22px;
-        padding-left: 25px;
-        padding-right: 25px;
-    }
-        .modal-header .close {
-            color: #fff;
-            opacity: 1;
-        }
-    .modal-body .d--box {
-        padding-bottom: 15px;
-    }
-    .modal-body label {
-        display: inline-block;
-        margin-bottom: 2px;
-        color: #4c4c4c;
-        font-weight: 600;
-    }
-    input#ExpectedDate:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
-    }
-    .modal-dialog {
-        max-width: 100%;
-        width: 650px;
-    }
-    .modal-body {
-        padding: 12px 25px;
-    }
-    .modal-header button:focus {
-        outline: 0px dotted;
-        outline: 0px auto -webkit-focus-ring-color;
-    }
-</style>

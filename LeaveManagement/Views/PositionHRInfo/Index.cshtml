@@ -23,10 +23,10 @@
                                         Skills
                                     </th>
                                     <th>
-                                        Department
+                                        Dept.
                                     </th>
                                     <th>
-                                        No. Of Positions
+                                        No. Of Pos.
                                     </th>
                                     <th>
                                         Priority
@@ -35,7 +35,7 @@
                                         Budget
                                     </th>
                                     <th>
-                                        Expected Date
+                                        Exp. Date
                                     </th>
                                     <th>
                                         Experience
@@ -44,7 +44,7 @@
                                         Status
                                     </th>
                                     <th>
-                                        Requested By
+                                        Req. By
                                     </th>
                                     <th>
                                         Action
@@ -94,6 +94,34 @@
                                     </tr>
                                 }
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
 
@@ -145,11 +173,31 @@
                     targets: [0, 1, 2],
                     className: 'mdl-data-table__cell--non-numeric'
                 }
-            ]
+            ],
+            initComplete: function () {
+                this.api().columns([3, 5, 9]).every(function () {
+                    var column = this;
+                    var select = $('<select><option value="">Show All</option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
         });
     });
 </script>
-<style>
+<!--  <style>
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .btn {
         padding: 2px 8px;
         border-radius: 3px;
@@ -158,14 +206,19 @@
     }
 
     #emp-list_wrapper .table tr th {
+        font-size: 12px;
         white-space: nowrap;
         text-align: center;
+        padding: 4px 4px;
+        font-weight: 600;
     }
 
     #emp-list_wrapper .table tr td {
+        font-size: 12px;
         white-space: nowrap;
-        padding: 4px 5px;
-        vertical-align: middle;
+        text-align: center;
+        padding: 4px 4px;
+        font-weight: 600;
     }
 
     .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
@@ -180,4 +233,4 @@
     .add_btn {
         margin-left: 16px !important;
     }
-</style>
+</style>-->

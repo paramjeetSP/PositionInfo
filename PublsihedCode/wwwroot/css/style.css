@@ -177,34 +177,31 @@ body {
 }
         .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
             border: 1px solid #d5e8f5;
-            padding: 3px 20px;
             font-weight: 400;
             font-size: 14px;
             box-shadow: none !important;
             margin: 0 0.5em;
-            /*margin: 0 auto;
-            max-width: 484px;
-            width: 100%;*/
-            height: 40px;
+            padding: 3px 5px;
+            height: 25px;
         }
 .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] a {
     color: #56b9f4;
 }
 .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .btn {
-    padding: 20px;
+
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin: 0;
+    box-shadow: 0 0 10px rgb(86 185 244 / 40%);
     font-weight: 600;
     background: #56b9f4;
     border: none;
-    box-shadow: 0 0 20px rgba(86, 185, 244, 0.4);
     color: #fff;
-    margin-top: 20px;
-    margin-bottom: -10px;
     background: #56b9f4;
     background: -moz-linear-gradient(left, #56b9f4 0%, #3c9dd7 100%);
     background: -webkit-linear-gradient(left, #56b9f4 0%, #3c9dd7 100%);
     background: linear-gradient(to right, #56b9f4 0%, #3c9dd7 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#56b9f4', endColorstr='#3c9dd7',GradientType=1 );
-    border-radius: 30px;
 }
 .timelog--parent .logo img {
     max-width: 380px;
@@ -458,7 +455,14 @@ a.menu {
 }
 #emp-list_wrapper .table td {
     width: 12%;
+    font-size: 12px;
+    white-space: nowrap;
     text-align: center;
+    padding: 4px 4px;
+    font-weight: 600;
+}
+.add_btn {
+    margin-left: 16px !important;
 }
 #emp-list_filter input {
     padding: 7px 20px;
@@ -470,6 +474,11 @@ a.menu {
     background: #28bdf0;
     color: #fff;
     border-color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: center;
+    padding: 4px 4px;
+    font-weight: 600;
 }
 .mid--box .d--box {
     padding: 20px 0;
@@ -656,6 +665,74 @@ input#tab2 {
 }
 #Emp-Hist tr td:last-child {
     text-align: center;
+}
+input#ExpectedDate {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+h4.modal-title {
+    margin-top: 0;
+    color: #fff;
+}
+
+.modal-header {
+    background: #28bdf0;
+    padding-bottom: 22px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+    .modal-header .close {
+        color: #fff;
+        opacity: 1;
+    }
+
+.modal-body .d--box {
+    padding-bottom: 15px;
+}
+
+.modal-body label {
+    display: inline-block;
+    margin-bottom: 2px;
+    color: #4c4c4c;
+    font-weight: 600;
+}
+
+input#ExpectedDate:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+
+.modal-dialog {
+    max-width: 100%;
+    width: 650px;
+}
+
+.modal-body {
+    padding: 12px 25px;
+}
+
+.modal-header button:focus {
+    outline: 0px dotted;
+    outline: 0px auto -webkit-focus-ring-color;
+}
+form .signUp [class*="col"] .form-control {
+    margin: 0 0 !important;
+    padding: 5px 15px !important;
+    height: 40px !important;
 }
 
 @media(max-width:767px){

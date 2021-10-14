@@ -106,13 +106,13 @@
                     {
                         <li id="Admin_Dashboard">
                             <a asp-area="" asp-controller="Admin" asp-action="Index">
-                                <i class="fa fa-dashboard"></i>
-                                <span class="title">Admin Dashboard</span>
+                                <i class="fa fa-dashboard"></i><span class="tooltiptext">Dashboard</span>
+                                <span class="title">Dashboard </span>
                             </a>
                         </li>
                         <li id="Position_form">
                             <a asp-area="" asp-controller="PositionInfo" asp-action="Index">
-                                <i class="fa fa-list-alt"></i>
+                                <i class="fa fa-list-alt"></i><span class="tooltiptext">Employee List</span>
                                 <span class="title">Employee List</span>
                             </a>
                         </li>
@@ -122,7 +122,7 @@
                     {
                         <li id="PositionHR_form">
                             <a asp-area="" asp-controller="PositionHRInfo" asp-action="Index">
-                                <i class="fa fa-clock-o"></i>
+                                <i class="fa fa-clock-o"></i><span class="tooltiptext">Position Info</span>
                                 <span class="title">Position Info</span>
                             </a>
                         </li>
@@ -159,5 +159,46 @@
 
         });
     </script>
+    <style>
+        .dashboardHolder .side--bar ul li a {
+            position: relative;
+        }
+
+        .tooltiptext {
+            visibility: hidden;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            padding: 3px 9px;
+            position: absolute;
+            left: 58px;
+            z-index: 999;
+            border: 1px solid #efefef;
+            border-radius: 4px;
+        }
+        .dashboardHolder .side--bar ul li a:hover .tooltiptext {
+            visibility: visible;
+        }
+        .dashboardHolder .side--bar {
+            overflow: visible;
+            z-index: 2;
+        }
+        .side--bar .tooltiptext {
+            display: none;
+        }
+        .side--bar.menu-collapse .tooltiptext {
+            display: block;
+        }
+        .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #333 transparent transparent;
+        }
+    </style>
 </body>
 </html>

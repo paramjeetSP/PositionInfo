@@ -155,7 +155,7 @@ namespace LeaveManagement.BAL
                 }
                 else
                 {
-                    empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfileFilter] @Dept,@Grade",
+                    empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfileFilter1] @Dept,@Grade",
                                     new SqlParameter("@Dept", dept),new SqlParameter("@Grade", grade)).ToList();
                 } 
                 DateTime dt = new();
