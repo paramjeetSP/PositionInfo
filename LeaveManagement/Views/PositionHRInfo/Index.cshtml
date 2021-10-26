@@ -32,12 +32,6 @@
                                         Priority
                                     </th>
                                     <th>
-                                        Budget
-                                    </th>
-                                    <th>
-                                        Exp. Date
-                                    </th>
-                                    <th>
                                         Experience
                                     </th>
                                     <th>
@@ -47,6 +41,12 @@
                                         Req. By
                                     </th>
                                     <th>
+                                        Mgmt Status
+                                    </th>
+                                    <th>
+                                        Assigned To
+                                    </th>
+                                    <th>
                                         Action
                                     </th>
                                 </tr>
@@ -54,44 +54,44 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Title)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CreatedOn)
-                                        </td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.Id" onclick="initateView(@item.Id)"><i class="fa fa-eye view_eye"></i></button>
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Department)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NoOfPosition)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Priority)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Budget)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ExpectedDate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Experience)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Status)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RequestedBy)
-                                        </td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)"><i class="fa fa-edit"></i></button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.Id" onclick="initateView(@item.Id)"><i class="fa fa-eye view_eye"></i></button>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Department)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfPosition)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Priority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Experience)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RequestedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MgmtStatus)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssignTo)
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)"><i class="fa fa-edit"></i></button>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                             <tfoot>
@@ -197,40 +197,3 @@
         });
     });
 </script>
-<!--  <style>
-    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .btn {
-        padding: 2px 8px;
-        border-radius: 3px;
-        margin: 0;
-        box-shadow: 0 0 10px rgb(86 185 244 / 40%);
-    }
-
-    #emp-list_wrapper .table tr th {
-        font-size: 12px;
-        white-space: nowrap;
-        text-align: center;
-        padding: 4px 4px;
-        font-weight: 600;
-    }
-
-    #emp-list_wrapper .table tr td {
-        font-size: 12px;
-        white-space: nowrap;
-        text-align: center;
-        padding: 4px 4px;
-        font-weight: 600;
-    }
-
-    .timelog--parent main[role="main-wrapper"] .mid--box [class*="col"] .form-control {
-        padding: 3px 5px;
-        height: 25px;
-    }
-
-    .mdl-button {
-        height: 30px;
-    }
-
-    .add_btn {
-        margin-left: 16px !important;
-    }
-</style>-->

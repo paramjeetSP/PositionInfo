@@ -25,6 +25,7 @@ namespace LeaveManagement.Controllers
         public async Task<IActionResult> EditEmpResourse(int ID)
         {
             var editLeaves = await model.EditHREmpRes(ID);
+            ViewBag.HRList = await model.HRList();
             return PartialView("_HRPositionInfo", editLeaves);
         }
         public async Task<IActionResult> SaveHRChangesBasedID(HrpositionInfo updateLeaveData)

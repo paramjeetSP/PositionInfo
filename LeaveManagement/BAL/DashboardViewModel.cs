@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LeaveManagement.BAL
 {
@@ -114,6 +115,8 @@ namespace LeaveManagement.BAL
                     data.ExpectedDate = updateLeaveData.ExpectedDate;
                     data.Experience = updateLeaveData.Experience;
                     data.Status = updateLeaveData.Status;
+                    data.MgmtStatus = updateLeaveData.MgmtStatus;
+                    data.AssignTo = updateLeaveData.AssignTo;
                     _context.HrpositionInfo.Update(data);
                     _context.SaveChanges();
                 }
@@ -131,6 +134,8 @@ namespace LeaveManagement.BAL
                     employeeAvailability.Experience = updateLeaveData.Experience;
                     employeeAvailability.Status = updateLeaveData.Status;
                     employeeAvailability.RequestedBy = updateLeaveData.RequestedBy;
+                    employeeAvailability.MgmtStatus = employeeAvailability.MgmtStatus;
+                    employeeAvailability.AssignTo = employeeAvailability.AssignTo;
                     _context.HrpositionInfo.Add(employeeAvailability);
                     _context.SaveChanges();
                 }
@@ -193,7 +198,14 @@ namespace LeaveManagement.BAL
             try
             {
                 List<HrpositionInfo> empList = _context.HrpositionInfo.OrderByDescending(x => x.Status).ThenBy(y => y.Priority).ToList();
-                return empList;
+                List<HrpositionInfo> empList1 = new List<HrpositionInfo>();
+                foreach (HrpositionInfo hrpositionInfo in empList)
+                {
+                    if (hrpositionInfo.MgmtStatus == null)
+                        hrpositionInfo.MgmtStatus = "Pending";
+                    empList1.Add(hrpositionInfo);
+                }
+                return empList1;
             }
             catch (Exception ex)
             {
@@ -256,6 +268,21 @@ namespace LeaveManagement.BAL
                 return null;
             }
 
+        }
+
+        public async Task<List<SelectListItem>> HRList()
+        {
+            var data = await _context.Employee.Where(x => x.FkDepartment == 7 && x.EmpStatus == "Active").Select(x => x.FullName).ToListAsync();
+            List<SelectListItem> hrList = new List<SelectListItem>();
+            int i = 1;
+            foreach(var item in data)
+            {
+                SelectListItem selectListItem = new SelectListItem();
+                selectListItem.Value = i.ToString();
+                selectListItem.Text = item;
+                hrList.Add(selectListItem);
+            }
+            return hrList;
         }
     }
 }

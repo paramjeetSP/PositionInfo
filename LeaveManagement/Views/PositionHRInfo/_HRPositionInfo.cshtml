@@ -40,18 +40,6 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="d--box">
-                        <label>Budget</label>
-                        @Html.TextBoxFor(m => m.Budget, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="d--box">
-                        <label>Expected Closing Date</label>
-                        @Html.EditorFor(m => m.ExpectedDate, new { @class = "form-control", @type = "date" })
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="d--box">
                         <label>Experience</label>
                         @Html.TextBoxFor(m => m.Experience, new { @class = "form-control" })
                     </div>
@@ -67,10 +55,25 @@
                 }
                 else
                 {
-                    <div class="col-sm-6"  style="display:none">
+                    <div class="col-sm-6" style="display:none">
                         <div class="d--box">
                             <label>Status</label>
                             @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                @if (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "Management")
+                {
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Mgmt Status</label>
+                            @Html.DropDownListFor(m => m.MgmtStatus, new SelectList(Enum.GetValues(typeof(MgmtStatus))), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Assign To</label>
+                            @Html.DropDownListFor(m => m.AssignTo, (IEnumerable<SelectListItem>)ViewBag.HRList, new { @class = "form-control" })
                         </div>
                     </div>
                 }
@@ -108,6 +111,8 @@
             Experience: $('#Experience').val(),
             Status: $("#Status option:selected").text(),
             RequestedBy: $('#Name').val(),
+            MgmtStatus: $('#MgmtStatus option:selected').text(),
+            AssignTo: $('#AssignTo option:selected').text(),
         };
         $.ajax({
             type: 'POST',

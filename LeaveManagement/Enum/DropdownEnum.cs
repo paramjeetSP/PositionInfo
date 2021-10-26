@@ -11,4 +11,11 @@
         Open,
         Closed
     }
+
+    public enum MgmtStatus
+    {
+        Pending,
+        Approved,
+        Rejected
+    }
 }
