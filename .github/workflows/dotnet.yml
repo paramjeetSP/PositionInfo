@@ -32,4 +32,4 @@ jobs:
           ftp-username: FreshdeskAPI
           ftp-password: FResH34E&Y5R
           port: 2120
-          local-dir: /home/runner/work/PositionInfo/PositionInfo/Release/
+          local-dir: D:\a\PositionInfo\PositionInfo\Release\
