@@ -25,11 +25,4 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish -c Release --output ./Release
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
-      with:
-          server: 192.168.0.28
-          username: FreshdeskAPI
-          password: FResH34E&Y5R
-          port: 2120
-          local-dir: D:\a\PositionInfo\PositionInfo\Release\
+    
