@@ -54,72 +54,60 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Title)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.Id" onclick="initateView(@item.Id)"><i class="fa fa-eye view_eye"></i></button>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Department)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NoOfPosition)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Priority)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Experience)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RequestedBy)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MgmtStatus)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AssignTo)
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)"><i class="fa fa-edit"></i></button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                                        </td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.Id" onclick="initateView(@item.Id)"><i class="fa fa-eye view_eye"></i></button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Department)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NoOfPosition)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Priority)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Experience)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RequestedBy)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MgmtStatus)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AssignTo)
+                                        </td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.Id" onclick="initateEdit(@item.Id)"><i class="fa fa-edit"></i></button>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -128,10 +116,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="BalanceLeaveModal1" role="dialog">
-    </div>
-    <div class="modal fade" id="BalanceLeaveModal11" role="dialog">
     </div>
 </main>
 
@@ -142,7 +126,7 @@
             url: '@Url.Action("EditEmpResourse", "PositionHRInfo")',
             data: { ID: LeaveRowID },
             success: function (response) {
-                $('#BalanceLeaveModal1').html(response);
+                $('#EmployeeList').append(`<div class="modal fade" id="BalanceLeaveModal1" data-backdrop="static" role="dialog">${response}</div>`);
                 $('#BalanceLeaveModal1').modal('show');
             },
             error: function (response) {
@@ -156,7 +140,7 @@
             url: '@Url.Action("ViewEmpskills", "PositionHRInfo")',
             data: { ID: LeaveRowID },
             success: function (response) {
-                $('#BalanceLeaveModal11').html(response);
+                $('#EmployeeList').append(`<div class="modal fade" id="BalanceLeaveModal11" data-backdrop="static" role="dialog">${response}</div>`);
                 $('#BalanceLeaveModal11').modal('show');
             },
             error: function (response) {

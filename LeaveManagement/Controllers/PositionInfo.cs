@@ -30,8 +30,7 @@ namespace LeaveManagement.Controllers
         }
         public async Task<IActionResult> SaveResChangesBasedID(EmployeeResDetails updateLeaveData)
         {
-            bool editLeaves = await model.UpdateEmpResData(updateLeaveData);
-            return Json(new { success = editLeaves });
+            return Json(await model.UpdateEmpResData(updateLeaveData));
         }
         public async Task<IActionResult> ViewEmpskills(int ID)
         {

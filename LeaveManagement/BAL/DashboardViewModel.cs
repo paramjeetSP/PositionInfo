@@ -32,7 +32,7 @@ namespace LeaveManagement.BAL
             {
                 EmployeeResDetails employeeResDetails = new();
                 var data = await _context.EmployeeAvailability.Where(x => x.EmpId == ID).FirstOrDefaultAsync();
-                if(data != null)
+                if (data != null)
                 {
                     employeeResDetails.Id = data.EmpId ?? ID;
                     employeeResDetails.OnBench = data.MarkToBench ?? false;
@@ -59,7 +59,7 @@ namespace LeaveManagement.BAL
             {
                 HrpositionInfo employeeResDetails = new();
                 var data = await _context.HrpositionInfo.Where(x => x.Id == ID).FirstOrDefaultAsync();
-                if(data != null)
+                if (data != null)
                 {
                     employeeResDetails = data;
                 }
@@ -79,7 +79,7 @@ namespace LeaveManagement.BAL
             try
             {
                 var data = await _context.EmployeeAvailability.Where(x => x.EmpId == updateLeaveData.Id).FirstOrDefaultAsync();
-                if(data != null)
+                if (data != null)
                 {
                     _context.EmployeeAvailability.Remove(data);
                 }
@@ -91,8 +91,7 @@ namespace LeaveManagement.BAL
                 employeeAvailability.Skillset = updateLeaveData.Skillset;
                 employeeAvailability.CurrentProjName = updateLeaveData.CurrentProjName;
                 _context.EmployeeAvailability.Add(employeeAvailability);
-                _context.SaveChanges();
-                return true;
+                return _context.SaveChanges() > 0;
             }
             catch
             {
@@ -161,10 +160,10 @@ namespace LeaveManagement.BAL
                 else
                 {
                     empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfileFilter1] @Dept,@Grade",
-                                    new SqlParameter("@Dept", dept),new SqlParameter("@Grade", grade)).ToList();
-                } 
+                                    new SqlParameter("@Dept", dept), new SqlParameter("@Grade", grade)).ToList();
+                }
                 DateTime dt = new();
-                foreach(var item in empList)
+                foreach (var item in empList)
                 {
                     dt = Convert.ToDateTime(item.DOJ);
                     DateTime today = DateTime.Now;
@@ -184,7 +183,7 @@ namespace LeaveManagement.BAL
                         item.Experience = Math.Round(oldexperienceindays, 1).ToString();
                     }
                 }
-                
+
                 return empList;
             }
             catch (Exception ex)
@@ -275,7 +274,7 @@ namespace LeaveManagement.BAL
             var data = await _context.Employee.Where(x => x.FkDepartment == 7 && x.EmpStatus == "Active").Select(x => x.FullName).ToListAsync();
             List<SelectListItem> hrList = new List<SelectListItem>();
             int i = 1;
-            foreach(var item in data)
+            foreach (var item in data)
             {
                 SelectListItem selectListItem = new SelectListItem();
                 selectListItem.Value = i.ToString();

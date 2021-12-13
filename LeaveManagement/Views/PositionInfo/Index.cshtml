@@ -53,73 +53,63 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FullName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.OfficialEmail)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Mobile)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Department)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Experience)
-                                    </td>
-                                    <td>
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)"><i class="fa fa-eye view_eye"></i></button>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MarkToBench)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PartialAvailable)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CurrentProject)
-                                    </td>
-                                    <td>
-                                        @if (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == @item.Department)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OfficialEmail)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mobile)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Department)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Experience)
+                                        </td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="View_@item.ID" onclick="initateView(@item.ID)"><i class="fa fa-eye view_eye"></i></button>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MarkToBench)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PartialAvailable)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExpPartialDateAvailability)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CurrentProject)
+                                        </td>
+                                        <td>
+                                            @if (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == @item.Department)
                                             {
-                                        <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)"><i class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" data-target="#myModal" class="btn btn-default" id="Edit_@item.ID" onclick="initateEdit(@item.ID)"><i class="fa fa-edit"></i></button>
                                             }
                                             else
                                             {
-                                        <button data-toggle="modal" style="background: black;" data-target="#myModal" class="btn btn-default" disabled id="Edit_@item.ID"><i class="fa fa-edit"></i></button>
+                                                <button data-toggle="modal" style="background: black;" data-target="#myModal" class="btn btn-default" disabled id="Edit_@item.ID"><i class="fa fa-edit"></i></button>
                                             }
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -128,10 +118,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="BalanceLeaveModal" role="dialog">
-    </div>
-    <div class="modal fade" id="BalanceLeaveModal12" role="dialog">
     </div>
 </main>
 
@@ -142,11 +128,10 @@
             url: '@Url.Action("EditEmpResourse", "PositionInfo")',
             data: { ID: LeaveRowID },
             success: function (response) {
-                $('#BalanceLeaveModal').html(response);
+                $('#EmployeeList').append(`<div class="modal fade" data-backdrop="static" id="BalanceLeaveModal" role="dialog">${response}</div>`);
                 $('#BalanceLeaveModal').modal('show');
             },
-            error: function (response) {
-            }
+            error: function (response) {}
         });
     }
 
@@ -156,16 +141,16 @@
             url: '@Url.Action("ViewEmpskills", "PositionInfo")',
             data: { ID: LeaveRowID },
             success: function (response) {
-                $('#BalanceLeaveModal12').html(response);
+                $('#EmployeeList').append(`<div class="modal fade" data-backdrop="static" id="BalanceLeaveModal12" role="dialog">${response}</div>`);
                 $('#BalanceLeaveModal12').modal('show');
             },
-            error: function (response) {
-            }
+            error: function (response) {}
         });
     }
 
     $(document).ready(function () {
         $('#Position_form').addClass('active');
+        var filter={};
         $('#emp-list').DataTable({
             "ordering": false,
             columnDefs: [
@@ -177,24 +162,55 @@
             initComplete: function () {
                 this.api().columns([3, 6, 7]).every(function () {
                     var column = this;
-                    var select = $('<select><option value="">Show All</option></select>')
+                    var expression=column[0];
+                    var select = $(`<select class="filter${expression[0]}"><option value="">Show All</option></select>`)
                         .appendTo($(column.footer()).empty())
                         .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
-                            column
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .draw();
+                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+
+                            switch(expression[0]) {
+                                case 3:
+                                filter.dept=val;
+                                break;
+                                case 6:
+                                filter.onBench=val;
+                                break;
+                                case 7:
+                                filter.partialAvail=val;
+                                break;
+                                default:
+                            }
+                            sessionStorage.setItem('filter',JSON.stringify(filter));
                         });
 
                     column.data().unique().sort().each(function (d, j) {
                         select.append('<option value="' + d + '">' + d + '</option>')
                     });
+
+                    if(sessionStorage.getItem('filter')){
+                        var res=JSON.parse(sessionStorage.getItem('filter'));
+                        switch(expression[0]) {
+                            case 3:
+                            column.search(res.dept ? '^' + res.dept + '$' : '', true, false).draw();
+                            $(`.filter${expression[0]}`).val(res.dept)
+                            break;
+                            case 6:
+                            column.search(res.onBench ? '^' + res.onBench + '$' : '', true, false).draw();
+                            $(`.filter${expression[0]}`).val(res.onBench)
+                            break;
+                            case 7:
+                            column.search(res.partialAvail ? '^' + res.partialAvail + '$' : '', true, false).draw();
+                            $(`.filter${expression[0]}`).val(res.partialAvail)
+                            break;
+                            default:
+                        }
+                    }
                 });
             }
         });
     });
+
 </script>
 

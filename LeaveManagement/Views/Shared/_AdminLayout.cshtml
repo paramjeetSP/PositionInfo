@@ -28,32 +28,32 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @*<environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="~/js/scrolling-nav.js"></script>
-            <script src="~/js/ckeditor/ckeditor.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="~/js/scrolling-nav.js"></script>
+        <script src="~/js/ckeditor/ckeditor.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
         </environment>
         <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+        crossorigin="anonymous"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
         </environment>*@
     <link rel="icon" href="~/images/fav-SPIMAGE.png" sizes="16x16 32x32" type="image/png">
 </head>
@@ -100,9 +100,9 @@
                 @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 {
                     @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
-                       (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")) ||
-                       (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BD") ||
-                       (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BAG"))
+                   (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")) ||
+                   (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BD") ||
+                   (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "BAG"))
                     {
                         <li id="Admin_Dashboard">
                             <a asp-area="" asp-controller="Admin" asp-action="Index">
@@ -118,7 +118,7 @@
                         </li>
                     }
                     @if (HttpContextAccessor.HttpContext.User.IsInRole("Admin") ||
-                      (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")))
+                   (bool)(HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Grade")?.Value.StartsWith("B")))
                     {
                         <li id="PositionHR_form">
                             <a asp-area="" asp-controller="PositionHRInfo" asp-action="Index">
@@ -156,8 +156,16 @@
         $('.side--bar li').click(function () {
             $('.side--bar .active').removeClass('active');
             $(this).addClass('active');
-
         });
+
+        function closePopup(){
+            $(event.target).parents('.modal').remove();
+            $('.modal-backdrop ').remove();
+        }        
+          
+        if(!window.location.href.endsWith('PositionInfo/Index') )
+            sessionStorage.removeItem('filter');
+
     </script>
     <style>
         .dashboardHolder .side--bar ul li a {
@@ -176,19 +184,24 @@
             border: 1px solid #efefef;
             border-radius: 4px;
         }
+
         .dashboardHolder .side--bar ul li a:hover .tooltiptext {
             visibility: visible;
         }
+
         .dashboardHolder .side--bar {
             overflow: visible;
             z-index: 2;
         }
+
         .side--bar .tooltiptext {
             display: none;
         }
+
         .side--bar.menu-collapse .tooltiptext {
             display: block;
         }
+
         .tooltiptext::after {
             content: "";
             position: absolute;
