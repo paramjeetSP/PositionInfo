@@ -67,8 +67,6 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -86,3 +84,5 @@ app.Use(async (context, next) =>
     }
 });
 app.UseSession();
+
+app.Run();
