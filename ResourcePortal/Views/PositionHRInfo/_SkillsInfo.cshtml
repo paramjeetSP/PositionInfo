@@ -1,0 +1,87 @@
+﻿@model ResourcePortal.Database.HrpositionInfo
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="closePopup()">&times;</button>
+            <h4 class="modal-title" style="position: absolute;">Skills</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="d--box">
+                        @Html.TextAreaFor(m => m.Skills, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {      
+       CKEDITOR.replace('Skills');   
+    });
+</script>
+<style>
+    span#cke_1_top {
+        display: none;
+    }
+
+    span.cke_top.cke_reset_all {
+        display: none;
+    }
+
+    input#ExpectedDate {
+        display: block;
+        width: 100%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    h4.modal-title {
+        margin-top: 0;
+        color: #fff;
+    }
+
+    .modal-header {
+        background: #28bdf0;
+        padding-bottom: 22px;
+    }
+
+        .modal-header .close {
+            color: #fff;
+            opacity: 1;
+        }
+
+    .modal-body .d--box {
+        padding-bottom: 15px;
+    }
+
+    .modal-body label {
+        display: inline-block;
+        margin-bottom: 2px;
+        color: #4c4c4c;
+        font-weight: 600;
+    }
+
+    input#ExpectedDate:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    }
+
+    button:focus {
+        outline: 0px dotted;
+        outline: 0px auto -webkit-focus-ring-color;
+    }
+</style>

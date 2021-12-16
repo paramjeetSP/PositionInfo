@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcePortal", "ResourcePortal\ResourcePortal.csproj", "{4288FF67-2F9B-4870-94AE-8ACFA928A616}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4288FF67-2F9B-4870-94AE-8ACFA928A616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4288FF67-2F9B-4870-94AE-8ACFA928A616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4288FF67-2F9B-4870-94AE-8ACFA928A616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4288FF67-2F9B-4870-94AE-8ACFA928A616}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CADD123F-7390-4D9F-AEB8-7F00AD4D3755}
+	EndGlobalSection
+EndGlobal

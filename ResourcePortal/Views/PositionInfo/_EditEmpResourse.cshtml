@@ -1,0 +1,140 @@
+﻿@model ResourcePortal.Models.SpModels.EmployeeResDetails
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="closePopup()">&times;</button>
+            <h4 class="modal-title" style="position: absolute;">Edit Employee Details</h4>
+        </div>
+        <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>On Bench</label>
+                        @Html.CheckBoxFor(m => m.OnBench)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Partial Available</label>
+                        @Html.CheckBoxFor(m => m.PartialAvailable)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Expected Partial Available Date</label>
+                        @Html.EditorFor(model => model.ExpPartialDate, new { @type = "date",  @class = "form-control"  })
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Current Project Name</label>
+                        @Html.TextBoxFor(m => m.CurrentProjName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="d--box">
+                        <label>Skill Set</label>
+                        @Html.TextAreaFor(m => m.Skillset, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('Skillset');
+    });
+    function SaveEditData() {        
+        var desc = CKEDITOR.instances['Skillset'].getData();
+        var model = {
+            OnBench: $('#OnBench').is(":checked"),
+            PartialAvailable: $('#PartialAvailable').is(":checked"),
+            ExpPartialDate: $('#ExpPartialDate').val(),
+            Skillset: desc,
+            CurrentProjName: $('#CurrentProjName').val(),
+            ID: $('#LeaveRowID').val(),
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SaveResChangesBasedID", "PositionInfo")',
+            data: { updateLeaveData: model },
+            success: function (response) {              
+                    location.reload();
+            },
+            error: function (response) {}
+        });
+    }
+</script>
+<!--
+<style>
+    input#ExpPartialDate {
+        display: block;
+        width: 100%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    h4.modal-title {
+        margin-top: 0;
+        color: #fff;
+    }
+
+    .modal-header {
+        background: #28bdf0;
+        padding-bottom: 22px;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+        .modal-header .close {
+            color: #fff;
+            opacity: 1;
+        }
+
+    .modal-body .d--box {
+        padding-bottom: 15px;
+    }
+
+    .modal-body label {
+        display: inline-block;
+        margin-bottom: 2px;
+        color: #4c4c4c;
+        font-weight: 600;
+    }
+
+    input#ExpPartialDate:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    }
+    .modal-dialog {
+        max-width: 100%;
+        width: 650px;
+    }
+    .modal-body {
+        padding: 12px 25px;
+    }
+    .modal-header button:focus {
+        outline: 0px dotted;
+        outline: 0px auto -webkit-focus-ring-color;
+    }
+</style> -->

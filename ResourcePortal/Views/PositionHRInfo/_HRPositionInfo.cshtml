@@ -1,0 +1,128 @@
+﻿@model ResourcePortal.Database.HrpositionInfo
+@using ResourcePortal.Enum
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="closePopup()">&times;</button>
+            <h4 class="modal-title" style="position: absolute;">Add/Edit Employee Details</h4>
+        </div>
+        <input type="hidden" id="LeaveRowID" name="custId" value="@Model.Id">
+        <input type="hidden" id="Name" name="custName" value="@HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Title</label>
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Department</label>
+                        @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>No. of Positions</label>
+                        @Html.TextBoxFor(m => m.NoOfPosition, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Priority</label>
+                        @Html.DropDownListFor(m => m.Priority, new SelectList(Enum.GetValues(typeof(Priority))), "Select Status", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="d--box">
+                        <label>Experience</label>
+                        @Html.TextBoxFor(m => m.Experience, new { @class = "form-control" })
+                    </div>
+                </div>
+                @if (@Model.Id != 0)
+                {
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Status</label>
+                            @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), "Select Status", new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-6" style="display:none">
+                        <div class="d--box">
+                            <label>Status</label>
+                            @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Status))), new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                @if (HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Dept")?.Value == "Management")
+                {
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Mgmt Status</label>
+                            @Html.DropDownListFor(m => m.MgmtStatus, new SelectList(Enum.GetValues(typeof(MgmtStatus))), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d--box">
+                            <label>Assign To</label>
+                            @Html.DropDownListFor(m => m.AssignTo, (IEnumerable<SelectListItem>)ViewBag.HRList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="d--box">
+                        <label>Skills</label>
+                        @Html.TextAreaFor(m => m.Skills, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SaveEditData()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {        
+        CKEDITOR.replace('Skills');
+    });
+    function SaveEditData() {
+        var desc = CKEDITOR.instances['Skills'].getData();
+        var model = {
+            Id: $('#LeaveRowID').val(),
+            Title: $('#Title').val(),
+            Skills: desc,
+            Department: $('#Department').val(),
+            NoOfPosition: $('#NoOfPosition').val(),
+            Priority: $("#Priority option:selected").text(),
+            Budget: $('#Budget').val(),
+            ExpectedDate: $('#ExpectedDate').val(),
+            Experience: $('#Experience').val(),
+            Status: $("#Status option:selected").text(),
+            RequestedBy: $('#Name').val(),
+            MgmtStatus: $('#MgmtStatus option:selected').text(),
+            AssignTo: $('#AssignTo option:selected').text(),
+        };
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SaveHRChangesBasedID", "PositionHRInfo")',
+            data: { updateLeaveData: model },
+            success: function (response) {
+                    location.reload();
+            },
+            error: function (response) {
+            }
+        });
+    }
+</script>
