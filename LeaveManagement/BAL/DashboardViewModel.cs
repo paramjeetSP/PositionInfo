@@ -155,7 +155,6 @@ namespace LeaveManagement.BAL
                 if (_httpContextAccessor.HttpContext.User.IsInRole("Admin"))
                 {
                     empList = _spcontext.Emp_GetAllEmployeeProfile.FromSqlRaw("[dbo].[Emp_GetAllEmployeeProfile]").ToList();
-                    empList = empList.OrderByDescending(x => x.MarkToBench).ThenByDescending(x => x.PartialAvailable).ToList();
                 }
                 else
                 {
@@ -183,7 +182,7 @@ namespace LeaveManagement.BAL
                         item.Experience = Math.Round(oldexperienceindays, 1).ToString();
                     }
                 }
-
+                empList = empList.OrderByDescending(x => Convert.ToDecimal(x.Experience)).ToList();
                 return empList;
             }
             catch (Exception ex)
